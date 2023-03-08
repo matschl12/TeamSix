@@ -24,6 +24,7 @@ public class Movie {
         return description;
     }
 
+
     public static List<Movie> initializeMovies(){
         List<Movie> movies = new ArrayList<>();
         movies.add(new Movie("Fifty Shades of Grey", "Christian Grey " +
