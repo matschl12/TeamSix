@@ -52,7 +52,8 @@ public class HomeController implements Initializable {
         // either set event handlers in the fxml file (onAction) or add them here
 
         searchBtn.setOnAction(actionEvent -> {
-            if (searchField.getText() != "") {
+            // Suchfeld Event -> teils funktionierend
+            if (!searchField.getText().equals("")) {
                 observableMovies.clear();
                 String input = searchField.getText();
                 for (Movie movie: allMovies) {
@@ -61,15 +62,20 @@ public class HomeController implements Initializable {
                     }
                 }
             }
-            if (genreComboBox.getPromptText() != "Filter by Genre") {
+            // Genre Box Event -> noch nicht funktionierend
+            if (!genreComboBox.getPromptText().equals("Filter by Genre")) {
                 observableMovies.clear();
                 for (Movie movie: allMovies) {
-                    if (Arrays.asList(movie.getGenres()).contains(genreComboBox.getItems())) {
-                        observableMovies.add(movie);
+                    for (Genre genre : Genre.values()) {
+                        if (genre.toString().equals(genreComboBox.getPromptText()) && movie.getGenres().contains(genre)) {
+                            observableMovies.add(movie);
+                        }
                     }
                 }
             }
+            // Reset -> noch nicht funktionierend
             if (searchField.getText().equals("") && genreComboBox.getPromptText().equals("Filter by Genre") && !allMovies.equals(observableMovies)) {
+               observableMovies.clear();
                 observableMovies.addAll(allMovies);
             }
 
