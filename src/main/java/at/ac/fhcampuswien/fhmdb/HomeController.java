@@ -51,10 +51,29 @@ public class HomeController implements Initializable {
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
 
-        String string = genreComboBox.getPromptText();
-
         searchBtn.setOnAction(actionEvent -> {
-            String input = searchBtn.getText();
+            if (searchField.getText() != "") {
+                observableMovies.clear();
+                String input = searchField.getText();
+                for (Movie movie: allMovies) {
+                    if (input.equals(movie.getDescription()) || input.equals(movie.getTitle())) {
+                        observableMovies.add(movie);
+                    }
+                }
+            }
+            if (genreComboBox.getPromptText() != "Filter by Genre") {
+                observableMovies.clear();
+                for (Movie movie: allMovies) {
+                    if (Arrays.asList(movie.getGenres()).contains(genreComboBox.getItems())) {
+                        observableMovies.add(movie);
+                    }
+                }
+            }
+            if (searchField.getText().equals("") && genreComboBox.getPromptText().equals("Filter by Genre") && !allMovies.equals(observableMovies)) {
+                observableMovies.addAll(allMovies);
+            }
+
+
         });
 
         // Sort button example:
