@@ -1,8 +1,48 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.Genre;
+import at.ac.fhcampuswien.fhmdb.models.Movie;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class HomeControllerTest {
-    
+    private static HomeController homeController;
+
+    @BeforeAll
+    static void init() {
+        homeController = new HomeController();
+    }
+
+    @Test
+    void observable_movies_and_allMovies_are_equal() {
+        homeController.initializeHomeController();
+        assertEquals(homeController.allMovies, homeController.observableMovies);
+    }
+
+    @Test
+    void movies_are_correctly_sorted_ascending() {
+        homeController.initializeHomeController();
+        homeController.sortAscending();
+
+        List<Movie> expectedOrdering = new ArrayList<>();
+        expectedOrdering.add(new Movie("Fifty Shades of Grey", "Christian Grey " +
+                "makes a deal with Anastasia Steel about his fetish and his sexual life.",
+                Arrays.asList(Genre.ROMANCE, Genre.DRAMA)));
+        expectedOrdering.add(new Movie("Interstellar", "Earth's last chance to find a habitable planet " +
+                "before a lack of resources causes the human race to go extinct.", Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA)));
+        expectedOrdering.add(new Movie("Star Wars 3: Revenge of the Sith", "The jedi concil have to confront a " +
+                "difficult time for their existence", Arrays.asList(Genre.WAR, Genre.SCIENCE_FICTION, Genre.ACTION)));
+        expectedOrdering.add(new Movie("To all the Boys I've loved before", "A movie about a girl whose love letters" +
+                "from young age were sent out.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA)));
+
+        assertEquals(expectedOrdering, homeController.observableMovies);
+
+    }
 }
