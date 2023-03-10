@@ -64,7 +64,7 @@ public class HomeController implements Initializable {
 
                 // Genre Box Event -> teilweise funktionierend
             if (!genreComboBox.getValue().equals("Filter by Genre")) {
-                observableMovies.clear();
+                observableMovies.removeAll(allMovies);
                 for (Movie movie : allMovies) {
                     for (Genre genre : Genre.values()) {
                         if (genreComboBox.getValue().equals(genre) && movie.getGenres().contains(genre)) {
@@ -79,7 +79,6 @@ public class HomeController implements Initializable {
                observableMovies.clear();
                observableMovies.addAll(allMovies);
             }  */
-
 
         });
 
