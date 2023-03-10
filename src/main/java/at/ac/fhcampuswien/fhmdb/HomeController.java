@@ -33,7 +33,6 @@ public class HomeController implements Initializable {
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
-
     private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     @Override
@@ -52,32 +51,34 @@ public class HomeController implements Initializable {
         // either set event handlers in the fxml file (onAction) or add them here
 
         searchBtn.setOnAction(actionEvent -> {
-            // Suchfeld Event -> teils funktionierend
+            // Suchfeld Event -> funktionierend
             if (!searchField.getText().equals("")) {
                 observableMovies.clear();
-                String input = searchField.getText();
-                for (Movie movie: allMovies) {
-                    if (input.equals(movie.getDescription()) || input.equals(movie.getTitle())) {
+                String input = searchField.getText().toLowerCase();
+                for (Movie movie : allMovies) {
+                    if (movie.getDescription().toLowerCase().contains(input) || movie.getTitle().toLowerCase().contains(input)) {
                         observableMovies.add(movie);
                     }
                 }
             }
-            // Genre Box Event -> noch nicht funktionierend
-            if (!genreComboBox.getPromptText().equals("Filter by Genre")) {
+
+                // Genre Box Event -> teilweise funktionierend
+            if (!genreComboBox.getValue().equals("Filter by Genre")) {
                 observableMovies.clear();
-                for (Movie movie: allMovies) {
+                for (Movie movie : allMovies) {
                     for (Genre genre : Genre.values()) {
-                        if (genre.toString().equals(genreComboBox.getPromptText()) && movie.getGenres().contains(genre)) {
+                        if (genreComboBox.getValue().equals(genre) && movie.getGenres().contains(genre)) {
                             observableMovies.add(movie);
                         }
                     }
                 }
             }
-            // Reset -> noch nicht funktionierend
-            if (searchField.getText().equals("") && genreComboBox.getPromptText().equals("Filter by Genre") && !allMovies.equals(observableMovies)) {
+
+            // Versuch um zu reseten, klappt aber noch nicht richtig
+            /* if (searchField.getText().equals("") && genreComboBox.getValue().equals("Filter by Genre") && !allMovies.equals(observableMovies)) {
                observableMovies.clear();
-                observableMovies.addAll(allMovies);
-            }
+               observableMovies.addAll(allMovies);
+            }  */
 
 
         });
