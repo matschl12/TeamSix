@@ -36,6 +36,8 @@ public class Movie {
                 "from young age were sent out.", Arrays.asList(Genre.ROMANCE, Genre.DRAMA)));
         movies.add(new Movie("Star Wars 3: Revenge of the Sith", "The jedi concil have to confront a " +
                 "difficult time for their existence", Arrays.asList(Genre.WAR, Genre.SCIENCE_FICTION, Genre.ACTION)));
+        movies.add(new Movie("Interstellar", "Earth's last chance to find a habitable planet " +
+                "before a lack of resources causes the human race to go extinct.", Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA)));
 
 
         return movies;

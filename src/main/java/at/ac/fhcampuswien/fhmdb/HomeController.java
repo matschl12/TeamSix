@@ -33,7 +33,7 @@ public class HomeController implements Initializable {
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
-    private final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
+    public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -64,10 +64,10 @@ public class HomeController implements Initializable {
 
                 // Genre Box Event -> teilweise funktionierend
             if (!genreComboBox.getValue().equals("Filter by Genre")) {
-                observableMovies.removeAll(allMovies);
+                observableMovies.clear();
                 for (Movie movie : allMovies) {
                     for (Genre genre : Genre.values()) {
-                        if (genreComboBox.getValue().equals(genre) && movie.getGenres().contains(genre)) {
+                        if (genreComboBox.getValue().equals(genre) && movie.getGenres().contains(genre) && !observableMovies.contains(movie)) {
                             observableMovies.add(movie);
                         }
                     }
@@ -86,16 +86,30 @@ public class HomeController implements Initializable {
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
                 // TODO sort observableMovies ascending
-                observableMovies.sort(Comparator.comparing(Movie::getTitle));
+                sortAscending();
 
                 sortBtn.setText("Sort (desc)");
             } else {
                 // TODO sort observableMovies descending
-                observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+                sortDescending();
                 sortBtn.setText("Sort (asc)");
             }
         });
 
+    }
+    // Anfangsstate für Homecontroller bei Test
+    public void initializeHomeController() {
+        observableMovies.clear();
+        observableMovies.addAll(allMovies);
+    }
 
+    // Filme aufsteigend sortieren
+    public void sortAscending() {
+        observableMovies.sort(Comparator.comparing(Movie::getTitle));
+    }
+
+    // Filme absteigend sortieren
+    public void sortDescending() {
+        observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
 }
