@@ -20,6 +20,7 @@ public class MovieCell extends ListCell<Movie> {
 
         if (empty || movie == null) {
             setText(null);
+            setGraphic(null); //had to add this line because there was a bug with showing duplicate movies
         } else {
             this.getStyleClass().add("movie-cell");
             title.setText(movie.getTitle());
