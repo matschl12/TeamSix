@@ -101,7 +101,7 @@ public class HomeController implements Initializable {
         });
 
     }
-    // Anfangsstate für Homecontroller bei Test
+    // homeController beginning state
     public void initializeHomeController() {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
@@ -109,12 +109,12 @@ public class HomeController implements Initializable {
 
     }
 
-    // Filme aufsteigend sortieren
+    // sort movies ascending
     public void sortAscending() {
         observableMovies.sort(Comparator.comparing(Movie::getTitle));
     }
 
-    // Filme absteigend sortieren
+    // sort movies descending
     public void sortDescending() {
         observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
@@ -122,7 +122,8 @@ public class HomeController implements Initializable {
 
     public void resetFilter()
     {
-        genreComboBox.setPromptText("Filter by Genre"); //not really working
+        genreComboBox.setPromptText("Filter by Genre");
+        genreComboBox.setValue(null);
         searchField.clear();
         searchField.setPromptText("Search FHMDb");
     }
