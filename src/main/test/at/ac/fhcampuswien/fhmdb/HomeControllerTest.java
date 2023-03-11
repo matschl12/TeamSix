@@ -76,7 +76,8 @@ class HomeControllerTest {
         homeController.allMovies.addAll(allMovies);
 
         // simulate user input
-        homeController.searchField.setPromptText("title 2"); // <- diese Line funktioniert nicht
+        homeController.searchField.setPromptText("title 2");
+        // <- diese Line funktioniert nicht
         homeController.searchBtn.fire();
 
         // check that the search results are correct
