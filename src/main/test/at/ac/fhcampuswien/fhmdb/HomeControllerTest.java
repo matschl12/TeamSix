@@ -25,6 +25,18 @@ class HomeControllerTest {
         homeController.initializeHomeController();
         assertEquals(homeController.allMovies, homeController.observableMovies);
     }
+    @Test
+    public void testGetters() {
+        Movie movie = new Movie("Interstellar", "Earth's last chance to find a habitable planet " +
+                "before a lack of resources causes the human race to go extinct.",
+                Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA));
+
+        assertEquals("Interstellar", movie.getTitle());
+        assertEquals("Earth's last chance to find a habitable planet " +
+                "before a lack of resources causes the human race to go extinct.", movie.getDescription());
+        assertEquals(Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), movie.getGenres());
+    }
+
 
     @Test
     void movies_are_correctly_sorted_ascending() {
@@ -45,6 +57,7 @@ class HomeControllerTest {
         assertEquals(expectedOrdering, homeController.observableMovies);
 
     }
+
 
     @Test
     void movies_are_correctly_sorted_descending() {
@@ -83,6 +96,18 @@ class HomeControllerTest {
         // check that the search results are correct
         List<Movie> expected = Arrays.asList(movie2);
         List<Movie> actual = homeController.observableMovies;
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void testGenreComboBox() {
+        // create the controller and initialize the genreComboBox
+        HomeController homeController = new HomeController();
+        homeController.genreComboBox.setPromptText("Filter by Genre");
+        homeController.genreComboBox.getItems().addAll(Genre.values());
+
+        // check that the genreComboBox is initialized correctly
+        List<Genre> expected = Arrays.asList(Genre.values());
+        List<Genre> actual = homeController.genreComboBox.getItems();
         assertEquals(expected, actual);
     }
 
