@@ -54,7 +54,7 @@ public class HomeController implements Initializable {
         // either set event handlers in the fxml file (onAction) or add them here
 
         searchBtn.setOnAction(actionEvent -> {
-            // Suchfeld Event -> funktionierend
+            // searchfield event if filtered by text
             if (!searchField.getText().equals("")) {
                 observableMovies.clear();
                 String input = searchField.getText().toLowerCase();
@@ -65,7 +65,7 @@ public class HomeController implements Initializable {
                 }
             }
 
-                // Genre Box Event -> teilweise funktionierend
+                // genreCombobox event if filtered by Genre
             if (!genreComboBox.getValue().equals("Filter by Genre")) {
                 observableMovies.clear();
                 for (Movie movie : allMovies) {
