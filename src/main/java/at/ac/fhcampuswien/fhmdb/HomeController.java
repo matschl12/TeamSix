@@ -76,6 +76,20 @@ public class HomeController implements Initializable {
                     }
                 }
             }
+
+            // event if filter by text and genre
+           if (!genreComboBox.getValue().equals("Filter by Genre") && !searchField.getText().equals("")) {
+                observableMovies.clear();
+                String input = searchField.getText().toLowerCase();
+                for (Movie movie: allMovies){
+                    for (Genre genre : Genre.values()) {
+                        if (genreComboBox.getValue().equals(genre) && movie.getGenres().contains(genre) &&
+                                (movie.getDescription().toLowerCase().contains(input) || movie.getTitle().toLowerCase().contains(input))) {
+                            observableMovies.add(movie);
+                        }
+                    }
+                }
+            }
         });
 
         // Sort button example:
@@ -120,11 +134,11 @@ public class HomeController implements Initializable {
     }
 
 
+    // reset button method
     public void resetFilter()
     {
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.setValue(null);
-        searchField.clear();
-        searchField.setPromptText("Search FHMDb");
+        searchField.setText("");
     }
 }

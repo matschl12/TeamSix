@@ -49,7 +49,7 @@ class HomeControllerTest {
     @Test
     void movies_are_correctly_sorted_descending() {
         homeController.initializeHomeController();
-        homeController.sortAscending();
+        homeController.sortDescending();
 
         List<Movie> expectedOrdering = new ArrayList<>();
         expectedOrdering.add(new Movie("To all the Boys I've loved before", "A movie about a girl whose love letters" +
