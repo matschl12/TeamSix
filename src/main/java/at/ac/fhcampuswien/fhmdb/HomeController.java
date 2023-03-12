@@ -55,14 +55,10 @@ public class HomeController implements Initializable {
 
         searchBtn.setOnAction(actionEvent -> {
             // searchfield event if filtered by text
+
             if (!searchField.getText().equals("")) {
-                observableMovies.clear();
-                String input = searchField.getText().toLowerCase();
-                for (Movie movie : allMovies) {
-                    if (movie.getDescription().toLowerCase().contains(input) || movie.getTitle().toLowerCase().contains(input)) {
-                        observableMovies.add(movie);
-                    }
-                }
+                searchFieldText(allMovies, searchField.getText().toLowerCase());
+
             }
 
                 // genreCombobox event if filtered by Genre
@@ -96,12 +92,12 @@ public class HomeController implements Initializable {
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
                 // TODO sort observableMovies ascending
-                sortAscending();
+                sortAscending(observableMovies);
 
                 sortBtn.setText("Sort (desc)");
             } else {
                 // TODO sort observableMovies descending
-                sortDescending();
+                sortDescending(observableMovies);
                 sortBtn.setText("Sort (asc)");
             }
         });
@@ -124,13 +120,13 @@ public class HomeController implements Initializable {
     }
 
     // sort movies ascending
-    public void sortAscending() {
-        observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+    public void sortAscending(ObservableList<Movie> movies) {
+        movies.sort(Comparator.comparing(Movie::getTitle));
     }
 
     // sort movies descending
-    public void sortDescending() {
-        observableMovies.sort(Comparator.comparing(Movie::getTitle));
+    public void sortDescending(ObservableList<Movie> movies) {
+        movies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
 
 
@@ -141,4 +137,17 @@ public class HomeController implements Initializable {
         genreComboBox.setValue(null);
         searchField.setText("");
     }
+
+    // method to search for a string in movie title or description
+    public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
+        observableMovies.clear();
+        for (Movie movie : allMovies) {
+            if (movie.getDescription().toLowerCase().contains(textToSearch) || movie.getTitle().toLowerCase().contains(textToSearch)) {
+                observableMovies.add(movie);
+            }
+        }
+
+        return observableMovies;
+    }
+
 }
