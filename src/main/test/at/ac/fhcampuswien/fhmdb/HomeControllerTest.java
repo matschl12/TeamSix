@@ -15,6 +15,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class HomeControllerTest {
     private static HomeController homeController;
 
+
+    @Test
+
+    void show_unfiltered_movies_initially() {
+        List<Movie> initialMovies = Movie.initializeMovies();
+        assertNotEquals(null, initialMovies);
+    }
+
+
+    @Test
+    void filterAllMoviesBySearchboxSearchingInTitleAndDescription(){};
+    //void
+
+
     @BeforeAll
     static void init() {
         homeController = new HomeController();
