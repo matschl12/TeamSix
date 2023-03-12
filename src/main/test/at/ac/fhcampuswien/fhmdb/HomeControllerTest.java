@@ -26,7 +26,7 @@ class HomeControllerTest {
         assertEquals(homeController.allMovies, homeController.observableMovies);
     }
     @Test
-    public void testGetters() {
+    public void test_get_methods_of_title_description_and_genres() {
         Movie movie = new Movie("Interstellar", "Earth's last chance to find a habitable planet " +
                 "before a lack of resources causes the human race to go extinct.",
                 Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA));
@@ -78,7 +78,7 @@ class HomeControllerTest {
         assertEquals(expectedOrdering, homeController.observableMovies);
     }
     @Test
-    public void testSearchButton() {
+    public void test_filter_by_string_in_search_field() {
         // create some test data
         Movie movie1 = new Movie("Title 1", "Description 1", List.of(Genre.ACTION));
         Movie movie2 = new Movie("Title 2", "Description 2", List.of(Genre.COMEDY));
@@ -89,7 +89,7 @@ class HomeControllerTest {
         homeController.allMovies.addAll(allMovies);
 
         // simulate user input
-        homeController.searchField.setPromptText("title 2");
+        homeController.searchField.setText("title 2");
         // <- diese Line funktioniert nicht
         homeController.searchBtn.fire();
 
@@ -99,9 +99,8 @@ class HomeControllerTest {
         assertEquals(expected, actual);
     }
     @Test
-    public void testGenreComboBox() {
-        // create the controller and initialize the genreComboBox
-        HomeController homeController = new HomeController();
+    public void test_filter_by_genre_in_genre_combo_box() {
+        //  initialize the genreComboBox
         homeController.genreComboBox.setPromptText("Filter by Genre");
         homeController.genreComboBox.getItems().addAll(Genre.values());
 
