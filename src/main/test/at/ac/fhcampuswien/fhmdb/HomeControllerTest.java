@@ -115,7 +115,6 @@ class HomeControllerTest {
         List<Movie> expected = homeController.observableMovies;
         List<Movie> actual = expectedOrdering;
         assertEquals(expected, actual); */
-
     }
 
 
@@ -194,7 +193,6 @@ class HomeControllerTest {
 
 
         assertEquals(expectedOrdering, homeController.observableMovies); */
-
     }
     @Test
     public void test_filter_by_string_in_search_field() {
@@ -213,7 +211,6 @@ class HomeControllerTest {
         ObservableList<Movie> actual = homeController.searchFieldText(allMovies, "title 2");
 
         assertEquals(expected,actual);
-
     }
     /* @Test
     public void test_filter_by_genre_in_genre_combo_box() {
@@ -229,5 +226,4 @@ class HomeControllerTest {
         List<Genre> actual = homeController.genreComboBox.getItems();
         assertEquals(expected, actual);
     } */
-
 }

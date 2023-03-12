@@ -30,9 +30,9 @@ public class HomeController implements Initializable {
 
     @FXML
     public JFXButton sortBtn;
+
     @FXML
     public JFXButton resetBtn;
-
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
@@ -58,7 +58,6 @@ public class HomeController implements Initializable {
 
             if (!searchField.getText().equals("")) {
                 searchFieldText(allMovies, searchField.getText().toLowerCase());
-
             }
 
                 // genreCombobox event if filtered by Genre
@@ -106,17 +105,12 @@ public class HomeController implements Initializable {
         resetBtn.setOnAction(actionEvent -> {
             initializeHomeController();
             resetFilter();
-
-
         });
-
     }
     // homeController beginning state
     public void initializeHomeController() {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
-
-
     }
 
     // sort movies ascending
@@ -131,8 +125,7 @@ public class HomeController implements Initializable {
 
 
     // reset button method
-    public void resetFilter()
-    {
+    public void resetFilter() {
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.setValue(null);
         searchField.setText("");
@@ -149,5 +142,4 @@ public class HomeController implements Initializable {
 
         return observableMovies;
     }
-
 }

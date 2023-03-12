@@ -27,8 +27,7 @@ public class MovieCell extends ListCell<Movie> {
             detail.setText(
                     movie.getDescription() != null
                             ? movie.getDescription()
-                            : "No description available"
-            );
+                            : "No description available");
 
 
             // color scheme

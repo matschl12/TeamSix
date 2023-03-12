@@ -74,10 +74,6 @@ public class Movie {
                 Arrays.asList(Genre.THRILLER, Genre.HORROR, Genre.MYSTERY)));
 
 
-
-
-
-
         return movies;
     }
 }
