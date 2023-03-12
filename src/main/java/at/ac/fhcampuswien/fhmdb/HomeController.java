@@ -125,12 +125,12 @@ public class HomeController implements Initializable {
 
     // sort movies ascending
     public void sortAscending() {
-        observableMovies.sort(Comparator.comparing(Movie::getTitle));
+        observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
 
     // sort movies descending
     public void sortDescending() {
-        observableMovies.sort(Comparator.comparing(Movie::getTitle).reversed());
+        observableMovies.sort(Comparator.comparing(Movie::getTitle));
     }
 
 
