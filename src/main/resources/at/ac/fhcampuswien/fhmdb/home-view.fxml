@@ -28,6 +28,8 @@
          <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)" />
          <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb" />
          <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css" />
+         <JFXComboBox fx:id="yearComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css" />
+         <JFXComboBox fx:id="ratingComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css"  />
          <JFXButton fx:id="searchBtn" prefHeight="26.0" prefWidth="47.0" styleClass="background-yellow" stylesheets="@styles.css" text="Filter" />
          <JFXButton fx:id="resetBtn" mnemonicParsing="false" onAction="#resetFilter" styleClass="background-yellow" text="Reset Filter" />
       </children>

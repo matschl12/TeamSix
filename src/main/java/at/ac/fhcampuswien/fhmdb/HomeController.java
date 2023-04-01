@@ -29,6 +29,12 @@ public class HomeController implements Initializable {
     public JFXComboBox genreComboBox;
 
     @FXML
+    public JFXComboBox yearComboBox;
+
+    @FXML
+    public JFXComboBox ratingComboBox;
+
+    @FXML
     public JFXButton sortBtn;
 
     @FXML
@@ -49,6 +55,13 @@ public class HomeController implements Initializable {
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.getItems().addAll(Genre.values());
+
+        yearComboBox.setPromptText("Filter by Release Year");
+        //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
+
+        ratingComboBox.setPromptText("Filter by Rating");
+        //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
+
 
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
