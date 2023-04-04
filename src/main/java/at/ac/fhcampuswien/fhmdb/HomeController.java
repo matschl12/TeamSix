@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 
+
 import java.net.URL;
 import java.util.*;
 
@@ -39,6 +40,8 @@ public class HomeController implements Initializable {
 
     @FXML
     public JFXButton resetBtn;
+    
+
 
     public List<Movie> allMovies = Movie.initializeMovies();
 

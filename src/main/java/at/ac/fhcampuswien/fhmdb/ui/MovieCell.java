@@ -13,6 +13,7 @@ public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
     private final VBox layout = new VBox(title, detail);
+    private final Label genres = new Label(); // idk if it works
 
     @Override
     protected void updateItem(Movie movie, boolean empty) {
@@ -28,6 +29,7 @@ public class MovieCell extends ListCell<Movie> {
                     movie.getDescription() != null
                             ? movie.getDescription()
                             : "No description available");
+            genres.setText(movie.getGenres().toString()); // idk if it works
 
 
             // color scheme
