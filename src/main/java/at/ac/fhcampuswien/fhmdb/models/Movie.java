@@ -1,19 +1,41 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import java.lang.reflect.Array;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMovies;
+import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
+
+@JsonIgnoreProperties(ignoreUnknown = true, value = {"id"})
 public class Movie {
+    // private String id;
     private String title;
     private String description;
     private List<Genre> genres;
+    private int releaseYear;
+    private String imgUrl;
+    private int lengthInMinutes;
+    private String[] directors;
+    private String[] writers;
+    private String[] mainCast;
+    private double rating;
 
-    public Movie(String title, String description, List<Genre> genres) {
+    public Movie() {
+
+    }
+    public Movie(String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lengthInMinutes, String[] directors, String[] writers, String[] mainCast, double rating) {
         this.title = title;
         this.description = description;
         this.genres = genres;
+        this.releaseYear = releaseYear;
+        this.imgUrl = imgUrl;
+        this.lengthInMinutes = lengthInMinutes;
+        this.directors = directors;
+        this.writers = writers;
+        this.mainCast = mainCast;
+        this.rating = rating;
     }
 
     public String getTitle() {
@@ -28,8 +50,9 @@ public class Movie {
 
 
     public static List<Movie> initializeMovies(){
-        List<Movie> movies = new ArrayList<>();
-        movies.add(new Movie("Fifty Shades of Grey", "Christian Grey " +
+        List<Movie> movies = fetchMovies();
+
+        /* movies.add(new Movie("Fifty Shades of Grey", "Christian Grey " +
                 "makes a deal with Anastasia Steel about his fetish and his sexual life.",
                 Arrays.asList(Genre.ROMANCE, Genre.DRAMA)));
         movies.add(new Movie("To all the Boys I've loved before", "A movie about a girl whose love letters" +
@@ -71,9 +94,9 @@ public class Movie {
         movies.add(new Movie("Rocky", "A boxer gets a shot at the heavyweight championship.",
                 Arrays.asList(Genre.SPORT, Genre.ROMANCE, Genre.ADVENTURE, Genre.DRAMA)));
         movies.add(new Movie("The Silence of the Lambs", "An FBI agent seeks the help of a psychopathic killer to catch another killer.",
-                Arrays.asList(Genre.THRILLER, Genre.HORROR, Genre.MYSTERY)));
-
+                Arrays.asList(Genre.THRILLER, Genre.HORROR, Genre.MYSTERY))); */
 
         return movies;
+
     }
 }

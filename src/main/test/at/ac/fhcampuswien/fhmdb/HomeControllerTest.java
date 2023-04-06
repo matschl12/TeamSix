@@ -41,7 +41,7 @@ class HomeControllerTest {
     }
     @Test
     public void test_get_methods_of_title_description_and_genres() {
-        Movie movie = new Movie("Interstellar", "Earth's last chance to find a habitable planet " +
+        Movie movie = new Movie(null, "Interstellar", "Earth's last chance to find a habitable planet " +
                 "before a lack of resources causes the human race to go extinct.",
                 Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA));
 

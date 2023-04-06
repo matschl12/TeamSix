@@ -20,5 +20,6 @@ public enum Genre {
     SCIENCE_FICTION,
     SPORT,
     THRILLER,
+    WESTERN,
     WAR
 }

@@ -16,6 +16,8 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.*;
 
+import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
+
 public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
@@ -40,8 +42,6 @@ public class HomeController implements Initializable {
 
     @FXML
     public JFXButton resetBtn;
-    
-
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
@@ -73,7 +73,9 @@ public class HomeController implements Initializable {
             // searchfield event if filtered by text
 
             if (!searchField.getText().equals("")) {
-                searchFieldText(allMovies, searchField.getText().toLowerCase());
+                observableMovies.clear();
+                observableMovies.addAll(fetchMoviesFilter(searchField.getText(),"", 0, 0));
+                //searchFieldText(allMovies, searchField.getText().toLowerCase());
             }
 
                 // genreCombobox event if filtered by Genre
@@ -139,7 +141,6 @@ public class HomeController implements Initializable {
         movies.sort(Comparator.comparing(Movie::getTitle).reversed());
     }
 
-
     // reset button method
     public void resetFilter() {
         genreComboBox.setPromptText("Filter by Genre");
@@ -148,7 +149,7 @@ public class HomeController implements Initializable {
     }
 
     // method to search for a string in movie title or description
-    public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
+   /* public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
         observableMovies.clear();
         for (Movie movie : allMovies) {
             if (movie.getDescription().toLowerCase().contains(textToSearch) || movie.getTitle().toLowerCase().contains(textToSearch)) {
@@ -156,6 +157,6 @@ public class HomeController implements Initializable {
             }
         }
 
-        return observableMovies;
-    }
+        return observableMovies ;
+    } */
 }
