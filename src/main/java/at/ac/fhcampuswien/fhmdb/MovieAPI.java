@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MovieAPI {
+    // mainURL of api
     static String mainURL = "https://prog2.fh-campuswien.ac.at";
 
     public static List<Movie> fetchMovies() {
@@ -41,8 +42,6 @@ public class MovieAPI {
            e.printStackTrace();
        }
 
-        System.out.println(movies);
-
        return movies;
 
     }
@@ -50,13 +49,13 @@ public class MovieAPI {
 
         String url;
         List<Movie> movies = new ArrayList<>();
-        if (releaseYear == 0) {
+        if (releaseYear == 0 && rating != 0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
         }
-        if (rating == 0) {
+        else if (rating == 0 && releaseYear !=0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
         }
-        if (rating == 0 && releaseYear == 0) {
+        else if (rating == 0 && releaseYear == 0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre);
         } else {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);

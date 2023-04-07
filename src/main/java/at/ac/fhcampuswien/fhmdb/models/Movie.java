@@ -47,6 +47,13 @@ public class Movie {
     }
 
     public List<Genre> getGenres() {return genres;}
+    public int getReleaseYear() {
+        return releaseYear;
+    }
+    public String[] getMainCast(){
+        return mainCast;
+    }
+
 
 
     public static List<Movie> initializeMovies(){
