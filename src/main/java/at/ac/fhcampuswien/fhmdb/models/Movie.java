@@ -53,8 +53,9 @@ public class Movie {
     public String[] getMainCast(){
         return mainCast;
     }
-
-
+    public double getRating() {
+        return rating;
+    }
 
     public static List<Movie> initializeMovies(){
         List<Movie> movies = fetchMovies();

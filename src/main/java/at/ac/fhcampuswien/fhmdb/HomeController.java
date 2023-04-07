@@ -63,10 +63,30 @@ public class HomeController implements Initializable {
         genreComboBox.getItems().addAll(Genre.values());
 
         yearComboBox.setPromptText("Filter by Release Year");
+        List<Integer> allReleaseYears = new ArrayList<>();
+        for (Movie movie : allMovies) {
+            int releaseYear = movie.getReleaseYear();
+            if(!allReleaseYears.contains(releaseYear)) {
+                allReleaseYears.add(releaseYear);
+            }
+            Collections.sort(allReleaseYears);
+
+        }
+        yearComboBox.getItems().addAll(allReleaseYears);
         // yearComboBox.getItems().addAll();
         //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
 
         ratingComboBox.setPromptText("Filter by Rating");
+        List<Double> allRatings = new ArrayList<>();
+        for (Movie movie : allMovies) {
+            double rating = movie.getRating();
+            if(!allRatings.contains(rating)) {
+                allRatings.add(rating);
+            }
+            Collections.sort(allRatings);
+
+        }
+        ratingComboBox.getItems().addAll(allRatings);
         //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
 
 
@@ -184,6 +204,10 @@ public class HomeController implements Initializable {
     public void resetFilter() {
         genreComboBox.setPromptText("Filter by Genre");
         genreComboBox.setValue(null);
+        yearComboBox.setPromptText("Filter by Release Year");
+        yearComboBox.setValue(null);
+        ratingComboBox.setPromptText("Filter by Rating");
+        ratingComboBox.setValue(null);
         searchField.setText("");
     }
 
