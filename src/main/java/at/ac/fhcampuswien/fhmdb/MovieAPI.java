@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MovieAPI {
-    static String mainURL = "http://localhost:8080";
+    static String mainURL = "https://prog2.fh-campuswien.ac.at";
 
     public static List<Movie> fetchMovies() {
 
