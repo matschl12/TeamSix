@@ -6,6 +6,8 @@ import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -93,6 +95,7 @@ public class HomeController implements Initializable {
         // TODO add event handlers to buttons and call the regarding methods
         // either set event handlers in the fxml file (onAction) or add them here
 
+
         searchBtn.setOnAction(actionEvent -> {
             // searchfield event if filtered by text
 
@@ -164,6 +167,18 @@ public class HomeController implements Initializable {
         }
         );
 
+
+        searchField.onKeyReleasedProperty().addListener(observable -> {
+            observableMovies.clear();
+            observableMovies.addAll(fetchMovies());
+            initializeHomeController();
+            resetFilter();
+        });
+
+
+
+
+
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
             if(sortBtn.getText().equals("Sort (asc)")) {
@@ -189,6 +204,11 @@ public class HomeController implements Initializable {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
     }
+
+
+
+
+
 
     // sort movies ascending
     public void sortAscending(ObservableList<Movie> movies) {
