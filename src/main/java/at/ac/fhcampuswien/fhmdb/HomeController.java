@@ -215,7 +215,7 @@ public class HomeController implements Initializable {
 
     public static String getMostPopularActor(List<Movie> movies) {
         Map<String, Long> actorCount = movies.stream()
-                .flatMap(movie -> movie.getMainCast().stream())
+                .flatMap(movie -> Arrays.stream(movie.getMainCast()).sorted())
                 .collect(Collectors.groupingBy(actor -> actor, Collectors.counting()));
         return actorCount.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
