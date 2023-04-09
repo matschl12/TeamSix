@@ -215,7 +215,7 @@ public class HomeController implements Initializable {
 
     public static String getMostPopularActor(List<Movie> movies) {
         Map<String, Long> actorCount = movies.stream()
-                .flatMap(movie -> Arrays.stream(movie.getMainCast()).sorted())
+                .flatMap(movie -> movie.getMainCast().stream())
                 .collect(Collectors.groupingBy(actor -> actor, Collectors.counting()));
         return actorCount.entrySet().stream()
                 .max(Map.Entry.comparingByValue())
@@ -252,15 +252,15 @@ public class HomeController implements Initializable {
     // Director Count method
     public static long countMoviesFrom(List<Movie> movies, String director) {
         return movies.stream()
-                .filter(movie -> movie.getDirector().equals(director))
+                .filter(movie -> movie.getDirectors().contains(director))
                 .count();
     }
 
     // Movies in between years Method
     public static List<Movie> getMoviesBetweenYears(List<Movie> movies, int startYear, int endYear) {
         return movies.stream()
-                .filter(movie -> movie.getYear() >= startYear && movie.getYear() <= endYear)
-                .sorted(Comparator.comparingInt(Movie::getYear))
+                .filter(movie -> movie.getReleaseYear() >= startYear && movie.getReleaseYear() <= endYear)
+                .sorted(Comparator.comparingInt(Movie::getReleaseYear))
                 .collect(Collectors.toList());
     }
 

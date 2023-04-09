@@ -45,7 +45,8 @@ public class MovieAPI {
        return movies;
 
     }
-    public static List<Movie> fetchMoviesFilter(String query, String genre, int releaseYear, double rating) {
+    public static List<Movie> fetchMoviesFilter(String query, String genre, int releaseYear,
+                                                double rating) {
 
         String url;
         List<Movie> movies = new ArrayList<>();
@@ -57,8 +58,9 @@ public class MovieAPI {
         }
         else if (rating == 0 && releaseYear == 0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre);
-        } else {
-             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+        } else if (rating !=0 && releaseYear !=0){
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+        } else {url = String.format(mainURL +"/movies");
         }
 
         try {
@@ -74,6 +76,7 @@ public class MovieAPI {
 
             ObjectMapper objectMapper = new ObjectMapper();
             movies = objectMapper.readValue(response, new TypeReference<List<Movie>>(){});
+            //movies.s
 
 
         } catch (Exception e) {
