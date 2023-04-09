@@ -88,4 +88,37 @@ public class MovieAPI {
         return movies;
 
     }
+
+
+    public static String newQuerySortAscDesc(String myQueryURL, String AscOrDesc) {
+
+
+        String url = myQueryURL+"sort=id:"+AscOrDesc;
+        return url;
+    }
+    public static String filteredQueryString(String query, String genre, int releaseYear,
+                                             double rating) {
+
+        String url;
+
+        if (releaseYear == 0 && rating != 0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
+        }
+        else if (rating == 0 && releaseYear !=0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
+        }
+        else if (rating == 0 && releaseYear == 0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre);
+        } else if (rating !=0 && releaseYear !=0){
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+        } else {url = String.format(mainURL +"/movies");
+        }
+        return url;
+
+    }
+
+
+
+
 }
+
