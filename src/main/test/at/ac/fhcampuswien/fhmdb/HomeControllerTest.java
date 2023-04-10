@@ -10,30 +10,21 @@ import org.junit.jupiter.api.Test;
 import java.util.*;
 
 import static at.ac.fhcampuswien.fhmdb.HomeController.*;
-import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class HomeControllerTest {
     private static HomeController homeController;
 
-
-    @Test
-
-    void show_unfiltered_movies_initially() {
-        List<Movie> initialMovies = Movie.initializeMovies();
-        assertNotEquals(null, initialMovies);
-    }
-
-
-    @Test
-    void filterAllMoviesBySearchboxSearchingInTitleAndDescription(){};
-    //void
-
-
     @BeforeAll
     static void init() {
         homeController = new HomeController();
+    }
+
+    @Test
+    void show_unfiltered_movies_initially() {
+        List<Movie> initialMovies = Movie.initializeMovies();
+        assertNotEquals(null, initialMovies);
     }
 
     @Test

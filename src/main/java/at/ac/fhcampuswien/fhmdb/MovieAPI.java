@@ -3,13 +3,10 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-
-import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -37,13 +34,6 @@ public class MovieAPI {
 
            ObjectMapper objectMapper = new ObjectMapper();
            movies = objectMapper.readValue(response, new TypeReference<List<Movie>>(){});
-
-
-           /* ArrayList<String> allGenresInArrayList=new ArrayList<>();
-           allGenresInArrayList= (ArrayList<String>) movies.stream().map(allgenres -> allgenres.getGenres().toArray()); */
-
-           //System.out.println(allGenresInArrayList.toString()); -> these lines lead to error in program
-
 
 
        } catch (Exception e) {
@@ -77,17 +67,6 @@ public class MovieAPI {
             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
         }
 
-        /* if (releaseYear == 0 && rating != 0) {
-             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
-        } else if (rating == 0 && releaseYear !=0) {
-             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
-        }
-        else if (rating == 0 && releaseYear == 0 && genre != "none") {
-             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre);
-        } else if (rating !=0 && releaseYear !=0){
-            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
-        } else {url = String.format(mainURL +"/movies?query=" +query);
-        } */
 
         try {
             URL api = new URL(url);

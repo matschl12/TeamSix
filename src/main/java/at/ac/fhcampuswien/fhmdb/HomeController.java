@@ -6,16 +6,11 @@ import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
-
-
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -77,7 +72,6 @@ public class HomeController implements Initializable {
 
         }
         yearComboBox.getItems().addAll(allReleaseYears);
-        // yearComboBox.getItems().addAll();
         //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
 
         ratingComboBox.setPromptText("Filter by Rating");
@@ -133,16 +127,12 @@ public class HomeController implements Initializable {
 
                 });
 
-
         searchField.onKeyReleasedProperty().addListener(observable -> {
             observableMovies.clear();
             observableMovies.addAll(fetchMovies());
             initializeHomeController();
             resetFilter();
         });
-
-
-
 
 
         // Sort button example:
@@ -170,11 +160,6 @@ public class HomeController implements Initializable {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
     }
-
-
-
-
-
 
     // sort movies ascending
     public void sortAscending(ObservableList<Movie> movies) {
@@ -233,18 +218,8 @@ public class HomeController implements Initializable {
                 .collect(Collectors.toList());
     }
 
-    // method to search for a string in movie title or description
-   /* public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
-        observableMovies.clear();
-        for (Movie movie : allMovies) {
-            if (movie.getDescription().toLowerCase().contains(textToSearch) || movie.getTitle().toLowerCase().contains(textToSearch)) {
-                observableMovies.add(movie);
-            }
-        }
 
-        return observableMovies ;
-    } */
-
+    // main method for method testing
     public static void main(String[] args) {
         HomeController controller = new HomeController();
         List<Movie> movielist = new ArrayList<>();
