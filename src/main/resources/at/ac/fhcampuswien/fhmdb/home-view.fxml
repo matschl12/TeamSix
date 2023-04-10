@@ -20,18 +20,18 @@
                <Insets left="2.0" right="2.0" />
             </padding>
          </Label>
-         <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to FHMDb!" />
+         <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to TeamSix-FHMDb!" />
       </children>
    </HBox>
    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
       <children>
-         <JFXButton fx:id="sortBtn" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)" />
+         <JFXButton fx:id="sortBtn" mnemonicParsing="false" styleClass="background-yellow" stylesheets="@styles.css" text="Sort (asc)" />
          <TextField fx:id="searchField" prefHeight="25.0" prefWidth="170.0" promptText="Search FHMDb" />
-         <JFXComboBox fx:id="genreComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css" />
-         <JFXComboBox fx:id="yearComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css" />
-         <JFXComboBox fx:id="ratingComboBox" focusColor="#f5c518" styleClass="filter-combo-box" stylesheets="@styles.css"  />
-         <JFXButton fx:id="searchBtn" prefHeight="26.0" prefWidth="47.0" styleClass="background-yellow" stylesheets="@styles.css" text="Filter" />
-         <JFXButton fx:id="resetBtn" mnemonicParsing="false" onAction="#resetFilter" styleClass="background-yellow" text="Reset Filter" />
+         <JFXComboBox fx:id="genreComboBox" styleClass="filter-combo-box" stylesheets="@styles.css" />
+         <JFXComboBox fx:id="yearComboBox" styleClass="filter-combo-box" stylesheets="@styles.css" />
+         <JFXComboBox fx:id="ratingComboBox" styleClass="filter-combo-box" stylesheets="@styles.css" />
+         <JFXButton fx:id="searchBtn" mnemonicParsing="false" styleClass="background-yellow" stylesheets="@styles.css" text="Filter" />
+         <JFXButton fx:id="resetBtn" mnemonicParsing="false" onAction="#resetFilter" styleClass="background-yellow" stylesheets="@styles.css" text="Reset Filter" />
       </children>
       <VBox.margin>
          <Insets />
