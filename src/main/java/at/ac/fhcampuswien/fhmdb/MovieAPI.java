@@ -9,6 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Scanner;
 
@@ -36,6 +37,14 @@ public class MovieAPI {
 
            ObjectMapper objectMapper = new ObjectMapper();
            movies = objectMapper.readValue(response, new TypeReference<List<Movie>>(){});
+
+
+
+                   ArrayList<String> allGenresInArrayList=new ArrayList<>();
+           allGenresInArrayList= (ArrayList<String>) movies.stream().map(allgenres -> allgenres.getGenres().toArray());
+
+           //System.out.println(allGenresInArrayList.toString());
+
 
 
        } catch (Exception e) {
@@ -76,7 +85,8 @@ public class MovieAPI {
 
             ObjectMapper objectMapper = new ObjectMapper();
             movies = objectMapper.readValue(response, new TypeReference<List<Movie>>(){});
-            //movies.s
+
+
 
 
         } catch (Exception e) {
