@@ -42,7 +42,7 @@ public class MovieAPI {
            /* ArrayList<String> allGenresInArrayList=new ArrayList<>();
            allGenresInArrayList= (ArrayList<String>) movies.stream().map(allgenres -> allgenres.getGenres().toArray()); */
 
-           //System.out.println(allGenresInArrayList.toString());
+           //System.out.println(allGenresInArrayList.toString()); -> these lines lead to error in program
 
 
 
@@ -58,7 +58,6 @@ public class MovieAPI {
 
         String url;
         List<Movie> movies = new ArrayList<>();
-
         // another try but doesnt work
         /* if (genre == null && releaseYear == 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query);
@@ -80,15 +79,14 @@ public class MovieAPI {
 
         if (releaseYear == 0 && rating != 0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
-        }
-        else if (rating == 0 && releaseYear !=0) {
+        } else if (rating == 0 && releaseYear !=0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
         }
-        else if (rating == 0 && releaseYear == 0) {
+        else if (rating == 0 && releaseYear == 0 && genre != null) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre);
         } else if (rating !=0 && releaseYear !=0){
             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
-        } else {url = String.format(mainURL +"/movies");
+        } else {url = String.format(mainURL +"/movies?query=" +query);
         }
 
         try {
@@ -112,12 +110,9 @@ public class MovieAPI {
             e.printStackTrace();
         }
 
-        System.out.println(movies);
-
         return movies;
 
     }
-
 
     public static String newQuerySortAscDesc(String myQueryURL, String AscOrDesc) {
 

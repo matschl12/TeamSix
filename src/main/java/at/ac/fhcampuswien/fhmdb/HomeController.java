@@ -20,8 +20,7 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMovies;
-import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
+import static at.ac.fhcampuswien.fhmdb.MovieAPI.*;
 
 public class HomeController implements Initializable {
     @FXML
@@ -102,7 +101,30 @@ public class HomeController implements Initializable {
         searchBtn.setOnAction(actionEvent -> {
             // searchfield event if filtered by text
 
-            if (!searchField.getText().equals("")) {
+            // another try -> doesnt working :/
+            /* observableMovies.clear();
+            // filter by query only
+            if (!searchField.getText().equals("") && genreComboBox.getValue().equals("Filter by Genre") && yearComboBox.getValue().equals("Filter by Release Year") && ratingComboBox.getValue().equals("Filter by Rating")) {
+                observableMovies.addAll(fetchMoviesFilter(searchField.getText(),null, 0, 0));
+                // filter by query and genre
+            } else if (!searchField.getText().equals("") && !genreComboBox.getValue().toString().equals("Filter by Genre") && yearComboBox.getValue().equals("Filter by Release Year") && ratingComboBox.getValue().equals("Filter by Rating")) {
+                observableMovies.addAll(fetchMoviesFilter(searchField.getText(),genreComboBox.getValue().toString(), 0, 0));
+                // filter by query and genre and year
+            } else if(!searchField.getText().equals("") && !genreComboBox.getValue().toString().equals("Filter by Genre") && !yearComboBox.getValue().equals("Filter by Release Year") && ratingComboBox.getValue().equals("Filter by Rating")) {
+                observableMovies.addAll(fetchMoviesFilter(searchField.getText(),genreComboBox.getValue().toString(), (Integer) yearComboBox.getValue(), 0));
+            }
+
+           /* // genreCombobox event if filtered by Genre
+            if (!genreComboBox.getValue().equals("Filter by Genre")) {
+                observableMovies.addAll(fetchMoviesFilter("",genreComboBox.getValue().toString(), 0, 0));
+            }
+
+            // event if filter by text and genre
+            if (!genreComboBox.getValue().equals("Filter by Genre") && !searchField.getText().equals("")) {
+                observableMovies.addAll(fetchMoviesFilter(searchField.getText(), genreComboBox.getValue().toString(), 0, 0));
+            } */
+
+        if (!searchField.getText().equals("")) {
                 observableMovies.clear();
                 // filter by query and year
                 /* if (!yearComboBox.getValue().equals("Filter by Release Year")) {
@@ -117,7 +139,7 @@ public class HomeController implements Initializable {
                 } else {
                     observableMovies.addAll(fetchMoviesFilter(searchField.getText(),"", 0, 0));
                 } */
-                observableMovies.addAll(fetchMoviesFilter(searchField.getText(),"", 0, 0));
+                 observableMovies.addAll(fetchMoviesFilter(searchField.getText(),"", 0, 0));
                 //searchFieldText(allMovies, searchField.getText().toLowerCase());
             }
 
@@ -246,23 +268,6 @@ public class HomeController implements Initializable {
                 .orElse("");
     }
 
-    /* public String getMostPopularActor(List<Movie> movies) {
-        movies.stream()
-                .filter(Movie -> Movie.getMainCast())
-                .collect(Collectors.toList());
-    } */
-
-    // method to search for a string in movie title or description
-   /* public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
-        observableMovies.clear();
-        for (Movie movie : allMovies) {
-            if (movie.getDescription().toLowerCase().contains(textToSearch) || movie.getTitle().toLowerCase().contains(textToSearch)) {
-                observableMovies.add(movie);
-            }
-        }
-
-        return observableMovies ;
-    } */
 
     // longest Movie title - method
     public static int getLongestMovieTitle(List<Movie> movies) {
@@ -287,4 +292,25 @@ public class HomeController implements Initializable {
                 .collect(Collectors.toList());
     }
 
+    // method to search for a string in movie title or description
+   /* public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
+        observableMovies.clear();
+        for (Movie movie : allMovies) {
+            if (movie.getDescription().toLowerCase().contains(textToSearch) || movie.getTitle().toLowerCase().contains(textToSearch)) {
+                observableMovies.add(movie);
+            }
+        }
+
+        return observableMovies ;
+    } */
+
+    public static void main(String[] args) {
+        HomeController controller = new HomeController();
+        List<Movie> movielist = new ArrayList<>();
+        movielist.addAll(controller.allMovies);
+        System.out.println(countMoviesFrom(movielist,"Peter Jackson"));
+        System.out.println(getLongestMovieTitle(movielist));
+        System.out.println(getMostPopularActor(movielist));
+        System.out.println(getMoviesBetweenYears(movielist,1900,1980));
+    }
 }
