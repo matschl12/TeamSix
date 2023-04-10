@@ -97,22 +97,25 @@ public class HomeController implements Initializable {
 
 
         searchBtn.setOnAction(actionEvent -> {
+            // emergency lines !
             // searchfield event if filtered by text
-                    /* if (!searchField.getText().equals("")) {
-                        observableMovies.clear();
-                        observableMovies.addAll(fetchMoviesFilter(searchField.getText(), "none", 0, 0));
-                    }
-           /* // genreCombobox event if filtered by Genre
+       /* if (!searchField.getText().equals("")) {
+            observableMovies.clear();
+            observableMovies.addAll(fetchMoviesFilter(searchField.getText(), "none", 0, 0));
+        }
+            // genreCombobox event if filtered by Genre
             if (!genreComboBox.getValue().equals("Filter by Genre")) {
+                observableMovies.clear();
                 observableMovies.addAll(fetchMoviesFilter("",genreComboBox.getValue().toString(), 0, 0));
             }
 
             // event if filter by text and genre
             if (!genreComboBox.getValue().equals("Filter by Genre") && !searchField.getText().equals("")) {
+                observableMovies.clear();
                 observableMovies.addAll(fetchMoviesFilter(searchField.getText(), genreComboBox.getValue().toString(), 0, 0));
             } */
 
-        if (!searchField.getText().equals("")) {
+       if (!searchField.getText().equals("")) {
                 observableMovies.clear();
                     // query and...
                 if (genreComboBox.getValue().toString() == "Filter by Genre" && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() ==("Filter by Rating")) {

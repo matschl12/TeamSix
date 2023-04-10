@@ -59,7 +59,7 @@ public class MovieAPI {
         String url;
         List<Movie> movies = new ArrayList<>();
 
-        if (genre == "none" && releaseYear == 0 && rating == 0) {
+       if (genre == "none" && releaseYear == 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query);
         } else if (genre != "none" && releaseYear == 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query+"&genre="+genre);
