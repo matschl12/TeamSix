@@ -15,8 +15,10 @@ public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
     private final Label genres = new Label(); //to show genres
+    
+    private final Label rating = new Label();
 
-    private final VBox layout = new VBox(title, detail, genres);
+    private final VBox layout = new VBox(title, detail, genres, rating);
 
     Font genreFont = Font.font("Verdana", FontPosture.ITALIC, 10); //to make genre font italic
 
@@ -29,13 +31,13 @@ public class MovieCell extends ListCell<Movie> {
             setGraphic(null); //had to add this line because there was a bug with showing duplicate movies
         } else {
             this.getStyleClass().add("movie-cell");
-            title.setText(movie.getTitle());
+            title.setText(movie.getTitle() + " ("+ movie.getReleaseYear() + ")"); //changed to show the release year after the title
             detail.setText(
                     movie.getDescription() != null
                             ? movie.getDescription()
                             : "No description available");
             genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get informations to show genres
-
+            rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get informations to show the rating
 
 
             // color scheme
@@ -43,6 +45,8 @@ public class MovieCell extends ListCell<Movie> {
             detail.getStyleClass().add("text-white");
             genres.getStyleClass().add("text-white"); //added
             genres.setFont(genreFont); //added
+            rating.getStyleClass().add("text-white"); //added
+            rating.setFont(genreFont); //added
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout
@@ -51,6 +55,8 @@ public class MovieCell extends ListCell<Movie> {
             detail.setWrapText(true);
             genres.setMaxWidth(this.getScene().getWidth() - 30); //added
             genres.setWrapText(true); //added
+            rating.setMaxWidth(this.getScene().getWidth() - 30); //added
+            rating.setWrapText(true); //added
             layout.setPadding(new Insets(10));
             layout.spacingProperty().set(10);
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
