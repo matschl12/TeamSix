@@ -14,7 +14,7 @@ public class FhmdbApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(FhmdbApplication.class.getResource("home-view.fxml"));
-        stage.getIcons().add(new Image(FhmdbApplication.class.getResourceAsStream("TeamSixIcon.png")));
+        // stage.getIcons().add(new Image(FhmdbApplication.class.getResourceAsStream("TeamSixIcon.png"))); <- bringt Programm zum abstürzen lol
         Scene scene = new Scene(fxmlLoader.load(), 890, 620);
         scene.getStylesheets().add(Objects.requireNonNull(FhmdbApplication.class.getResource("styles.css")).toExternalForm());
         stage.setTitle("TeamSix-FHMDb");

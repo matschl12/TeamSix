@@ -39,9 +39,8 @@ public class MovieAPI {
            movies = objectMapper.readValue(response, new TypeReference<List<Movie>>(){});
 
 
-
-                   ArrayList<String> allGenresInArrayList=new ArrayList<>();
-           allGenresInArrayList= (ArrayList<String>) movies.stream().map(allgenres -> allgenres.getGenres().toArray());
+           /* ArrayList<String> allGenresInArrayList=new ArrayList<>();
+           allGenresInArrayList= (ArrayList<String>) movies.stream().map(allgenres -> allgenres.getGenres().toArray()); */
 
            //System.out.println(allGenresInArrayList.toString());
 
@@ -59,6 +58,26 @@ public class MovieAPI {
 
         String url;
         List<Movie> movies = new ArrayList<>();
+
+        // another try but doesnt work
+        /* if (genre == null && releaseYear == 0 && rating == 0) {
+            url = String.format(mainURL +"/movies?query=" +query);
+        } else if (genre != null && releaseYear == 0 && rating == 0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre="+genre);
+        } else if (genre !=null && releaseYear != 0 && rating == 0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
+        } else if(genre != null && releaseYear == 0 && rating != 0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
+        } else if(genre == null && releaseYear != 0 && rating == 0) {
+            url = String.format(mainURL +"/movies?query=" +query +"&releaseYear=" + releaseYear);
+        } else if(genre == null && releaseYear == 0 && rating !=0) {
+            url = String.format(mainURL +"/movies?query=" +query+ "&ratingFrom=" + rating);
+        } else if(genre == null && releaseYear !=0 && rating !=0) {
+            url = String.format(mainURL +"/movies?query=" +query+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+        } else {
+            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+        } */
+
         if (releaseYear == 0 && rating != 0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
         }
