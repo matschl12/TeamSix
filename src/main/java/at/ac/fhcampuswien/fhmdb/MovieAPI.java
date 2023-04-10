@@ -58,36 +58,36 @@ public class MovieAPI {
 
         String url;
         List<Movie> movies = new ArrayList<>();
-        // another try but doesnt work
-        /* if (genre == null && releaseYear == 0 && rating == 0) {
+
+        if (genre == "none" && releaseYear == 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query);
-        } else if (genre != null && releaseYear == 0 && rating == 0) {
+        } else if (genre != "none" && releaseYear == 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query+"&genre="+genre);
-        } else if (genre !=null && releaseYear != 0 && rating == 0) {
+        } else if (genre !="none" && releaseYear != 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
-        } else if(genre != null && releaseYear == 0 && rating != 0) {
+        } else if(genre != "none" && releaseYear == 0 && rating != 0) {
             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
-        } else if(genre == null && releaseYear != 0 && rating == 0) {
+        } else if(genre == "none" && releaseYear != 0 && rating == 0) {
             url = String.format(mainURL +"/movies?query=" +query +"&releaseYear=" + releaseYear);
-        } else if(genre == null && releaseYear == 0 && rating !=0) {
+        } else if(genre == "none" && releaseYear == 0 && rating !=0) {
             url = String.format(mainURL +"/movies?query=" +query+ "&ratingFrom=" + rating);
-        } else if(genre == null && releaseYear !=0 && rating !=0) {
+        } else if(genre == "none" && releaseYear !=0 && rating !=0) {
             url = String.format(mainURL +"/movies?query=" +query+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
         } else {
             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
-        } */
+        }
 
-        if (releaseYear == 0 && rating != 0) {
+        /* if (releaseYear == 0 && rating != 0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
         } else if (rating == 0 && releaseYear !=0) {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
         }
-        else if (rating == 0 && releaseYear == 0 && genre != null) {
+        else if (rating == 0 && releaseYear == 0 && genre != "none") {
              url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre);
         } else if (rating !=0 && releaseYear !=0){
             url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
         } else {url = String.format(mainURL +"/movies?query=" +query);
-        }
+        } */
 
         try {
             URL api = new URL(url);
