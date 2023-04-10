@@ -51,6 +51,9 @@ public class HomeController implements Initializable {
 
     public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         observableMovies.addAll(allMovies);         // add dummy data to observable list
@@ -74,13 +77,12 @@ public class HomeController implements Initializable {
 
         }
         yearComboBox.getItems().addAll(allReleaseYears);
-
         // yearComboBox.getItems().addAll();
         //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
 
         ratingComboBox.setPromptText("Filter by Rating");
         List<Double> allRatings = new ArrayList<>();
-        for (Movie movie : allMovies) {
+        /*for (Movie movie : allMovies) {
             double rating = movie.getRating();
             if(!allRatings.contains(rating)) {
                 allRatings.add(rating);
@@ -88,6 +90,11 @@ public class HomeController implements Initializable {
             Collections.sort(allRatings);
 
         }
+        */
+         for(double i = 1 ; i<=10; i = i + 0.5)
+         {
+             allRatings.add(i);
+         }
         ratingComboBox.getItems().addAll(allRatings);
         //hier methode dass die Filter angezeigt werden aufrufen, muss für Exercise 2 gemacht werden
 
@@ -97,89 +104,34 @@ public class HomeController implements Initializable {
 
 
         searchBtn.setOnAction(actionEvent -> {
-            // emergency lines !
-            // searchfield event if filtered by text
-       /* if (!searchField.getText().equals("")) {
-            observableMovies.clear();
-            observableMovies.addAll(fetchMoviesFilter(searchField.getText(), "none", 0, 0));
-        }
-            // genreCombobox event if filtered by Genre
-            if (!genreComboBox.getValue().equals("Filter by Genre")) {
-                observableMovies.clear();
-                observableMovies.addAll(fetchMoviesFilter("",genreComboBox.getValue().toString(), 0, 0));
-            }
 
-            // event if filter by text and genre
-            if (!genreComboBox.getValue().equals("Filter by Genre") && !searchField.getText().equals("")) {
-                observableMovies.clear();
-                observableMovies.addAll(fetchMoviesFilter(searchField.getText(), genreComboBox.getValue().toString(), 0, 0));
-            } */
-
-       if (!searchField.getText().equals("")) {
-                observableMovies.clear();
-                    // query and...
-                if (genreComboBox.getValue().toString() == "Filter by Genre" && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() ==("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(),"none",0,0));
-                    //  genre
-                } else if (genreComboBox.getValue().toString() != ("Filter by Genre") && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() ==("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(),genreComboBox.getValue().toString(),0,0));
-                    // genre and year
-                } else if (genreComboBox.getValue().toString() != ("Filter by Genre") && yearComboBox.getValue() != ("Filter by Release Year") && ratingComboBox.getValue() == ("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(),genreComboBox.getValue().toString(), (Integer) yearComboBox.getValue(),0));
-                    // genre and rating
-                } else if (genreComboBox.getValue().toString() != ("Filter by Genre") && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() != ("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(),genreComboBox.getValue().toString(), 0, (Double) ratingComboBox.getValue()));
-                    // year
-                } else if(genreComboBox.getValue().toString() == ("Filter by Genre") && yearComboBox.getValue() != ("Filter by Release Year") && ratingComboBox.getValue() == ("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(), "none", (Integer) yearComboBox.getValue(), 0));
-                    // rating
-                } else if (genreComboBox.getValue().toString() == ("Filter by Genre") && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() != ("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(), "none", 0, (Double) ratingComboBox.getValue()));
-                    // year and rating
-                } else if(genreComboBox.getValue().toString() == ("Filter by Genre") && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() != ("Filter by Rating")) {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(),"none", (Integer) yearComboBox.getValue(), (Double) ratingComboBox.getValue()));
-                    // genre and year and rating
-                } else {
-                    observableMovies.addAll(fetchMoviesFilter(searchField.getText(), genreComboBox.getValue().toString() ,0,0));
-                }
-            }
-
-        else if (genreComboBox.getValue().toString() != ("Filter by Genre")) {
-            observableMovies.clear();
-                // genre and....
-            if (searchField.getText().equals("") && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() == ("Filter by Rating")) {
-                observableMovies.addAll(fetchMoviesFilter("", genreComboBox.getValue().toString(), 0, 0));
-                // rating
-            } else if(searchField.getText().equals ("") && yearComboBox.getValue() == ("Filter by Release Year") && ratingComboBox.getValue() != ("Filter by Rating")) {
-                observableMovies.addAll(fetchMoviesFilter("", genreComboBox.getValue().toString(), 0, (Double) ratingComboBox.getValue()));
-                // year
-            } else if(searchField.getText().equals("") && yearComboBox.getValue() != ("Filter by Release Year") && ratingComboBox.getValue() == ("Filter by Rating")) {
-                observableMovies.addAll(fetchMoviesFilter("", genreComboBox.getValue().toString(), (Integer) yearComboBox.getValue(), 0));
-                // year and rating
-            } else {
-                observableMovies.addAll(fetchMoviesFilter("", genreComboBox.getValue().toString() , (Integer) yearComboBox.getValue(), (Double) ratingComboBox.getValue()));
-            }
-
-            }
-
-
-                // old
-             // event if filter by text and genre
-
-                /*String input = searchField.getText().toLowerCase();
-                    for (Movie movie: allMovies){
-                    for (Genre genre : Genre.values()) {
-                        if (genreComboBox.getValue().equals(genre) && movie.getGenres().contains(genre) &&
-                                (movie.getDescription().toLowerCase().contains(input) || movie.getTitle().toLowerCase().contains(input))) {
-                            observableMovies.add(movie);
-                        }
+                    String searchFieldString = "";
+                    if (!searchField.getText().equals("")) {
+                        searchFieldString = searchField.getText();
                     }
-                }
-            } */
 
 
-        }
-        );
+                    String genreString = "";
+                    if (genreComboBox.getValue() != null) {
+                        genreString = genreComboBox.getValue().toString();
+                    }
+
+                    int releaseYearInt = 0;
+                    if (yearComboBox.getValue() != null){
+
+                        releaseYearInt = (int) yearComboBox.getValue();
+                    }
+
+                    double ratingDouble = 0;
+                    if (ratingComboBox.getValue() != null ) {
+                        ratingDouble = (Double) ratingComboBox.getValue();
+                    }
+
+                    observableMovies.clear();
+                    observableMovies.addAll(fetchMoviesFilter(searchFieldString,genreString,releaseYearInt,ratingDouble));
+
+
+                });
 
 
         searchField.onKeyReleasedProperty().addListener(observable -> {
@@ -218,6 +170,11 @@ public class HomeController implements Initializable {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
     }
+
+
+
+
+
 
     // sort movies ascending
     public void sortAscending(ObservableList<Movie> movies) {
@@ -276,7 +233,6 @@ public class HomeController implements Initializable {
                 .collect(Collectors.toList());
     }
 
-    // old
     // method to search for a string in movie title or description
    /* public ObservableList<Movie> searchFieldText(List<Movie> allMovies, String textToSearch) {
         observableMovies.clear();
