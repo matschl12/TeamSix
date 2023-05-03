@@ -6,8 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox prefHeight="331.0" prefWidth="570.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.fhmdb.HomeController">
-   <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="347.0" spacing="20.0" style="-fx-background-color: black;">
+<VBox prefHeight="321.0" prefWidth="682.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.fhmdb.HomeController">
+   <HBox alignment="CENTER_LEFT" prefHeight="42.0" prefWidth="687.0" spacing="20.0" style="-fx-background-color: black;">
       <padding>
          <Insets bottom="7.0" left="10.0" top="7.0" />
       </padding>
@@ -21,6 +21,28 @@
             </padding>
          </Label>
          <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to TeamSix-FHMDb!" />
+         <MenuBar id="navBar" fx:id="navBar" prefHeight="26.0" prefWidth="141.0">
+           <menus>
+             <Menu mnemonicParsing="false" text="File">
+               <items>
+                 <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+             </Menu>
+             <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                 <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+             </Menu>
+             <Menu mnemonicParsing="false" text="Help">
+               <items>
+                 <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+             </Menu>
+           </menus>
+            <HBox.margin>
+               <Insets left="136.0" />
+            </HBox.margin>
+         </MenuBar>
       </children>
    </HBox>
    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">
@@ -40,5 +62,5 @@
          <Insets bottom="20.0" left="10.0" top="20.0" />
       </padding>
    </HBox>
-   <JFXListView fx:id="movieListView" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
+   <JFXListView fx:id="movieListView" prefHeight="208.0" prefWidth="565.0" style="-fx-background-color: black;" styleClass="background-black" stylesheets="@styles.css" VBox.vgrow="ALWAYS" />
 </VBox>

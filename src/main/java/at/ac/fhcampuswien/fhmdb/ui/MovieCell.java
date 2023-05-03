@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb.ui;
 
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.Background;
@@ -15,10 +16,11 @@ public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
     private final Label genres = new Label(); //to show genres
-    
-    private final Label rating = new Label();
+    private final Label rating = new Label(); //to show the rating
 
-    private final VBox layout = new VBox(title, detail, genres, rating);
+    private final Button addToWatchlist = new Button();
+
+    private final VBox layout = new VBox(title, detail, genres, rating, addToWatchlist);
 
     Font genreFont = Font.font("Verdana", FontPosture.ITALIC, 10); //to make genre font italic
 
@@ -37,8 +39,8 @@ public class MovieCell extends ListCell<Movie> {
                             ? movie.getDescription()
                             : "No description available");
             genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get informations to show genres
-            rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get informations to show the rating
-
+            rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get information to show the rating
+            addToWatchlist.setText("Add to Watchlist");
 
             // color scheme
             title.getStyleClass().add("text-yellow");
@@ -47,6 +49,7 @@ public class MovieCell extends ListCell<Movie> {
             genres.setFont(genreFont); //added
             rating.getStyleClass().add("text-white"); //added
             rating.setFont(genreFont); //added
+            addToWatchlist.getStyleClass().add("background-yellow"); //added
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout
