@@ -46,26 +46,27 @@ public class MovieAPI {
     public static List<Movie> fetchMoviesFilter(String query, String genre, int releaseYear,
                                                 double rating) {
 
+        query = query.replace(" ", "%20"); // removes space in query
         String url;
         List<Movie> movies = new ArrayList<>();
 
-       if (genre == "none" && releaseYear == 0 && rating == 0) {
-            url = String.format(mainURL +"/movies?query=" +query);
-        } else if (genre != "none" && releaseYear == 0 && rating == 0) {
-            url = String.format(mainURL +"/movies?query=" +query+"&genre="+genre);
-        } else if (genre !="none" && releaseYear != 0 && rating == 0) {
-            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear);
-        } else if(genre != "none" && releaseYear == 0 && rating != 0) {
-            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+ "&ratingFrom=" + rating);
-        } else if(genre == "none" && releaseYear != 0 && rating == 0) {
-            url = String.format(mainURL +"/movies?query=" +query +"&releaseYear=" + releaseYear);
-        } else if(genre == "none" && releaseYear == 0 && rating !=0) {
-            url = String.format(mainURL +"/movies?query=" +query+ "&ratingFrom=" + rating);
-        } else if(genre == "none" && releaseYear !=0 && rating !=0) {
-            url = String.format(mainURL +"/movies?query=" +query+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+
+            // no releaseYear and no rating
+        if (releaseYear == 0 && rating == 0) {
+            url = mainURL + "/movies?query=" +query+ "&genre=" +genre;
+            // no releaseYear but rating
+        } else if (releaseYear == 0 && rating != 0) {
+            url = mainURL + "/movies?query=" +query+ "&genre=" +genre+"&ratingFrom=" +rating;
+            // releaseYear but no rating
+        } else if (releaseYear != 0 && rating == 0){
+            url = mainURL + "/movies?query=" +query+ "&genre=" +genre+ "&releaseYear=" +releaseYear;
         } else {
-            url = String.format(mainURL +"/movies?query=" +query+"&genre=" +genre+"&releaseYear=" +releaseYear+ "&ratingFrom=" + rating);
+            // everything
+            url = mainURL + "/movies?query=" +query+ "&genre=" +genre+ "&releaseYear=" +releaseYear+ "&ratingFrom=" +rating;
         }
+
+        System.out.println(url);
+
 
 
         try {
