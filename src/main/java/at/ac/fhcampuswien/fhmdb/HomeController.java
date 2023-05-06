@@ -41,6 +41,8 @@ public class HomeController implements Initializable {
 
     @FXML
     public JFXButton resetBtn;
+    @FXML
+    public JFXButton addToWishlistBtn; //for clickOnEvent add to wishlist
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
@@ -155,6 +157,8 @@ public class HomeController implements Initializable {
             initializeHomeController();
             resetFilter();
         });
+
+
     }
     // homeController beginning state
     public void initializeHomeController() {
@@ -223,6 +227,14 @@ public class HomeController implements Initializable {
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
 
     };
+
+    public static void addToWishlistBtnClicked() //method for the addToWishlist Button from MovieCell
+    {
+        //here code what the button should do
+        System.out.println("do stuff");
+    }
+
+
 
 
 

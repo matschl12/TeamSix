@@ -3,6 +3,8 @@ package at.ac.fhcampuswien.fhmdb.ui;
 import at.ac.fhcampuswien.fhmdb.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.HomeController;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +15,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
+import at.ac.fhcampuswien.fhmdb.HomeController;
 
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
@@ -24,6 +27,7 @@ public class MovieCell extends ListCell<Movie> {
 
     private final VBox layout = new VBox(title, detail, genres, rating, addToWatchlist);
 
+    HomeController controller;
     Font genreFont = Font.font("Verdana", FontPosture.ITALIC, 10); //to make genre font italic
 
     @Override
@@ -66,6 +70,14 @@ public class MovieCell extends ListCell<Movie> {
             layout.spacingProperty().set(10);
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
             setGraphic(layout);
+
+
+            addToWatchlist.setOnAction(new EventHandler<ActionEvent>() { //clickOnEvent for the addToWatchlist button which uses method from the controller class
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    controller.addToWishlistBtnClicked();
+                }
+            });
         }
     }
 
@@ -73,6 +85,8 @@ public class MovieCell extends ListCell<Movie> {
     public MovieCell() {
 
     }
+
+
 
     public MovieCell(ClickEventHandler addToWatchlistClicked) {
         super();
