@@ -19,11 +19,11 @@ public class WatchlistMovieEntity {
 
     }
 
-    public WatchlistMovieEntity(String aplid, String title, String description, String genres, int releaseYear, String imgUrl, int lenghtInMinutes, double rating) {
+    public WatchlistMovieEntity(String aplid, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lenghtInMinutes, double rating) {
         this.aplid = aplid;
         this.title = title;
         this.description = description;
-        this.genres = genres;
+        this.genres = genresToString(genres);
         this.releaseYear = releaseYear;
         this.imgUrl = imgUrl;
         this.lenghtInMinutes = lenghtInMinutes;

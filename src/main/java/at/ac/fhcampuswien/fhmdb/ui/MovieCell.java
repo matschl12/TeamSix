@@ -80,7 +80,7 @@ public class MovieCell extends ListCell<Movie> {
             addToWatchlistClicked.onClick(getItem());
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie: HomeController.watchList) {
-                    if (movie.id.equals(getItem().id)) {
+                    if (movie.id == getItem().id) {
                         addToWatchlist.setText("Delete from Watchlist");
                     }
                 }

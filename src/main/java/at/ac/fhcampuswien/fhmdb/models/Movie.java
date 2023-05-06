@@ -8,17 +8,17 @@ import java.util.List;
 import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMovies;
 import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
 
-@JsonIgnoreProperties(ignoreUnknown = true, value = {"id"})
+// @JsonIgnoreProperties(ignoreUnknown = true, value = {"id"})
 public class Movie {
     public String id;
     private String title;
     private String description;
     private List<Genre> genres;
     private int releaseYear;
-    private String imgUrl;
-    private int lengthInMinutes;
+    public String imgUrl;
+    public int lengthInMinutes;
     private List<String> directors;
-    private List<String> writers;
+    public List<String> writers;
     private List<String> mainCast;
     private double rating;
 
