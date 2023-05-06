@@ -4,6 +4,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
+import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
 public class Database {
@@ -16,7 +17,11 @@ public class Database {
 
     public void createConnectionSource()
     {
-
+        try {
+            connectionSource = new JdbcConnectionSource(DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public static ConnectionSource getConnectionSource() throws SQLException {
@@ -26,8 +31,9 @@ public class Database {
         return connectionSource;
     }
 
-    public void createTables()
+    public void createTables() throws SQLException
     {
+        TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
 
     }
 

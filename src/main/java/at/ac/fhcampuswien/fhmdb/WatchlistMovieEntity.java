@@ -15,16 +15,29 @@ public class WatchlistMovieEntity {
     int lenghtInMinutes;
     double rating;
 
-    //public String genresToString(List<Genre> genres){
-    //if (genres == null || genres.isEmpty()) {
-           //return "";
-             //} else {
-            //StringBuilder sb = new StringBuilder();
-            //for (Genre genre : genres) {
-                //sb.append(Movie.getGenres()).append(",");
-            //}
-            //return sb.substring(0, sb.length() - 1);
-        //}
+    public WatchlistMovieEntity() {
+
+    }
+
+    public WatchlistMovieEntity(String aplid, String title, String description, String genres, int releaseYear, String imgUrl, int lenghtInMinutes, double rating) {
+        this.aplid = aplid;
+        this.title = title;
+        this.description = description;
+        this.genres = genres;
+        this.releaseYear = releaseYear;
+        this.imgUrl = imgUrl;
+        this.lenghtInMinutes = lenghtInMinutes;
+        this.rating = rating;
+    }
+
+    public String genresToString(List<Genre> genres){
+        StringBuilder genreString = new StringBuilder();
+        for (Genre genre: genres) {
+            genreString.append(genre);
+            genreString.append(", ");
+        }
+        return genreString.toString();
+    }
     }
 
 
