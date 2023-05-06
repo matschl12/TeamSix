@@ -10,7 +10,7 @@ import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
 
 @JsonIgnoreProperties(ignoreUnknown = true, value = {"id"})
 public class Movie {
-    //private String id;
+    public String id;
     private String title;
     private String description;
     private List<Genre> genres;
@@ -25,10 +25,10 @@ public class Movie {
     public Movie() {
 
     }
-    public Movie(String title, String description, List<Genre> genres, int releaseYear,
+    public Movie(String id, String title, String description, List<Genre> genres, int releaseYear,
                  String imgUrl, int lengthInMinutes, List<String> directors, List<String> writers,
                  List<String> mainCast, double rating) {
-        //this.id=id;
+        this.id=id;
         this.title = title;
         this.description = description;
         this.genres = genres;

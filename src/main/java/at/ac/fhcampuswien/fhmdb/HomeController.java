@@ -46,6 +46,7 @@ public class HomeController implements Initializable {
 
     public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
+    public static List<Movie> watchList = new ArrayList<>();
 
 
 
@@ -217,6 +218,12 @@ public class HomeController implements Initializable {
                 .sorted(Comparator.comparingInt(Movie::getReleaseYear))
                 .collect(Collectors.toList());
     }
+
+    // Exercise 3 Business Layer
+    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+
+    };
+
 
 
     // main method for method testing

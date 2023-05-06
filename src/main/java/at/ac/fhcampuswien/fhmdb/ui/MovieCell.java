@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.ui;
 
+import at.ac.fhcampuswien.fhmdb.ClickEventHandler;
+import at.ac.fhcampuswien.fhmdb.HomeController;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -65,6 +67,27 @@ public class MovieCell extends ListCell<Movie> {
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
             setGraphic(layout);
         }
+    }
+
+    // Exercise 3 Business Layer
+    public MovieCell() {
+
+    }
+
+    public MovieCell(ClickEventHandler addToWatchlistClicked) {
+        super();
+        addToWatchlist.setOnMouseClicked(mouseEvent -> {
+            addToWatchlistClicked.onClick(getItem());
+            if (!HomeController.watchList.isEmpty()) {
+                for (Movie movie: HomeController.watchList) {
+                    if (movie.id.equals(getItem().id)) {
+                        addToWatchlist.setText("Delete from Watchlist");
+                    }
+                }
+            } else {
+                addToWatchlist.setText("Add to Watchlist");
+            }
+        });
     }
 }
 

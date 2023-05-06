@@ -34,7 +34,7 @@ class HomeControllerTest {
     }
     @Test
     public void test_get_methods_of_title_description_and_genres() {
-        Movie movie = new Movie("Interstellar", "Earth's last chance to find a habitable planet " +
+        Movie movie = new Movie("egal","Interstellar", "Earth's last chance to find a habitable planet " +
                 "before a lack of resources causes the human race to go extinct.",
                 Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), 0, null, 0, null, null, null, 0);
 
@@ -48,9 +48,9 @@ class HomeControllerTest {
     @Test
     void movies_are_correctly_sorted_ascending() {
 
-        Movie movie1 = new Movie("A Movie about Tigers", "Description 1", List.of(Genre.ACTION), 0, null, 0, null, null, null, 0);
-        Movie movie2 = new Movie("C Language explained", "Description 2", List.of(Genre.COMEDY), 0, null, 0, null, null, null, 0);
-        Movie movie3 = new Movie("B Letter", "Description 3", List.of(Genre.DRAMA), 0, null, 0, null, null, null, 0);
+        Movie movie1 = new Movie("egal","A Movie about Tigers", "Description 1", List.of(Genre.ACTION), 0, null, 0, null, null, null, 0);
+        Movie movie2 = new Movie("egal","C Language explained", "Description 2", List.of(Genre.COMEDY), 0, null, 0, null, null, null, 0);
+        Movie movie3 = new Movie("egal","B Letter", "Description 3", List.of(Genre.DRAMA), 0, null, 0, null, null, null, 0);
 
         // expected list
         ObservableList<Movie> expected = FXCollections.observableArrayList();
@@ -73,9 +73,9 @@ class HomeControllerTest {
     @Test
     void movies_are_correctly_sorted_descending() {
 
-        Movie movie1 = new Movie("A Movie about Tigers", "Description 1", List.of(Genre.ACTION), 0, null, 0, null, null, null, 0);
-        Movie movie2 = new Movie("C Language explained", "Description 2", List.of(Genre.COMEDY), 0, null, 0, null, null, null, 0);
-        Movie movie3 = new Movie("B Letter", "Description 3", List.of(Genre.DRAMA), 0, null, 0, null, null, null, 0);
+        Movie movie1 = new Movie(null, "A Movie about Tigers", "Description 1", List.of(Genre.ACTION), 0, null, 0, null, null, null, 0);
+        Movie movie2 = new Movie(null, "C Language explained", "Description 2", List.of(Genre.COMEDY), 0, null, 0, null, null, null, 0);
+        Movie movie3 = new Movie(null, "B Letter", "Description 3", List.of(Genre.DRAMA), 0, null, 0, null, null, null, 0);
 
         // expected list
         ObservableList<Movie> expected = FXCollections.observableArrayList();
@@ -157,11 +157,11 @@ class HomeControllerTest {
     @Test
     public void test_get_movies_between_years() {
         List<Movie> allMovies = new ArrayList<>();
-        Movie movie1 = new Movie("Test1",null,null,1920,null,0,null,null,null,0);
-        Movie movie2 = new Movie("Test2",null,null,1921,null,0,null,null,null,0);
-        Movie movie3 = new Movie("Test3",null,null,2000,null,0,null,null,null,0);
-        Movie movie4 = new Movie("Test4",null,null,1949,null,0,null,null,null,0);
-        Movie movie5 = new Movie("Test5",null,null,1888,null,0,null,null,null,0);
+        Movie movie1 = new Movie(null, "Test1",null,null,1920,null,0,null,null,null,0);
+        Movie movie2 = new Movie(null,"Test2",null,null,1921,null,0,null,null,null,0);
+        Movie movie3 = new Movie(null, "Test3",null,null,2000,null,0,null,null,null,0);
+        Movie movie4 = new Movie(null,"Test4",null,null,1949,null,0,null,null,null,0);
+        Movie movie5 = new Movie(null, "Test5",null,null,1888,null,0,null,null,null,0);
         allMovies.add(movie1);
         allMovies.add(movie2);
         allMovies.add(movie3);
