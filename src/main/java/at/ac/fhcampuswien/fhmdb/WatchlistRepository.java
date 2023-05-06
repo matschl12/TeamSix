@@ -1,25 +1,39 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import java.util.List;
-import java.util.ArrayList;
+
+import com.j256.ormlite.dao.Dao;
+
+import java.sql.SQLException;
 
 public class WatchlistRepository {
-    //Dao <WatchlistMovieEntity, Long> dao;
+    Dao <WatchlistMovieEntity, Long> dao;
 
-    public void removeFromWatchList(WatchlistMovieEntity movie)
-    {
-
+    public static void removeMovie(WatchlistMovieEntity movie) throws ExceptionHandling.DatabaseException {
+        try {
+            Dao<WatchlistMovieEntity, Long> dao = Database.getWatchlistMovieDao();
+            dao.delete(movie);
+        } catch (SQLException e) {
+            throw new ExceptionHandling.DatabaseException("Error while removing movie from watchlist in database", e);
+        }
     }
 
-    public List<WatchlistMovieEntity> getAll()
-    {
-        ArrayList<WatchlistMovieEntity> list = new ArrayList<WatchlistMovieEntity>();
-        return list;
+    public static List<WatchlistMovieEntity> getAllMovies() throws ExceptionHandling.DatabaseException {
+        try {
+            Dao<WatchlistMovieEntity, Long> dao = Database.getWatchlistMovieDao();
+            return dao.queryForAll();
+        } catch (SQLException e) {
+            throw new ExceptionHandling.DatabaseException("Error while fetching watchlist movies from database", e);
+        }
     }
 
-    public void addToWatchList(WatchlistMovieEntity movie)
-    {
-
+    public static void addMovie(WatchlistMovieEntity movie) throws ExceptionHandling.DatabaseException {
+        try {
+            Dao<WatchlistMovieEntity, Long> dao = Database.getWatchlistMovieDao();
+            dao.createOrUpdate(movie);
+        } catch (SQLException e) {
+            throw new ExceptionHandling.DatabaseException("Error while adding movie to watchlist in database", e);
+        }
     }
 
 
