@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -225,6 +226,20 @@ public class HomeController implements Initializable {
 
     // Exercise 3 Business Layer
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+        if (clickedItem instanceof Movie) {
+            Movie movie = (Movie) clickedItem;
+            try {
+                if(watchList.contains(movie)){
+                    WatchlistRepository.removeMovie((WatchlistMovieEntity) clickedItem);
+                    watchList.remove(movie);
+                } else {
+                    WatchlistRepository.addMovie((WatchlistMovieEntity) clickedItem);
+                    watchList.add(movie);
+                }
+            } catch (ExceptionHandling.DatabaseException e) {
+                e.printStackTrace();
+            }
+        }
 
     };
 

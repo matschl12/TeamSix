@@ -15,6 +15,15 @@ public class Database {
     private static ConnectionSource connectionSource;
     static Dao<WatchlistMovieEntity, Long> dao;
 
+    /* private Database() {
+        try {
+            createConnectionSource();
+            dao = getWatchlistMovieDao();
+            createTables();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    } */
     public void createConnectionSource()
     {
         try {
@@ -33,7 +42,7 @@ public class Database {
 
     public void createTables() throws SQLException
     {
-        TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
+        TableUtils.createTable(connectionSource, WatchlistMovieEntity.class);
 
     }
 

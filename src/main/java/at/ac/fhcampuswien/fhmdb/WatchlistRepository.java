@@ -12,7 +12,7 @@ public class WatchlistRepository {
 
     private static Dao<WatchlistMovieEntity, Long> initializeDao() {
         try {
-            return DaoManager.createDao(Database.getConnectionSource(), WatchlistMovieEntity.class);
+            return Database.getWatchlistMovieDao();
         } catch (SQLException e) {
             e.printStackTrace();
         }

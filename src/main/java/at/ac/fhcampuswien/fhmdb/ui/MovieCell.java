@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import at.ac.fhcampuswien.fhmdb.HomeController;
 
+import java.util.Objects;
+
 public class MovieCell extends ListCell<Movie> {
     private final Label title = new Label();
     private final Label detail = new Label();
@@ -94,12 +96,10 @@ public class MovieCell extends ListCell<Movie> {
             addToWatchlistClicked.onClick(getItem());
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie: HomeController.watchList) {
-                    if (movie.id == getItem().id) {
+                    if (movie.id.equals(getItem().id)) {
                         addToWatchlist.setText("Delete from Watchlist");
                     }
                 }
-            } else {
-                addToWatchlist.setText("Add to Watchlist");
             }
         });
     }
