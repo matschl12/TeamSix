@@ -45,7 +45,7 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton switchSceneBtn;
 
-    public List<Movie> allMovies = Movie.initializeMovies();
+    public static List<Movie> allMovies = new ArrayList<>();
 
     public final ObservableList<Movie> observableMovies = FXCollections.observableArrayList();   // automatically updates corresponding UI elements when underlying data changes
 
@@ -55,11 +55,19 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Database.getDatabase();
+        allMovies = Movie.initializeMovies();
         observableMovies.addAll(allMovies);         // add dummy data to observable list
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
+        try {
+            WatchlistRepository wr = new WatchlistRepository();
+            watchList.addAll(fillWatchlist(wr.getAllMovies()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
@@ -227,30 +235,34 @@ public class HomeController implements Initializable {
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
+            WatchlistRepository wr = new WatchlistRepository();
             try {
                 if(watchList.contains(movie)){
-                    WatchlistRepository.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                    wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.remove(movie);
-                    System.out.println(watchList);
                 } else {
-                    WatchlistRepository.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                    wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.add(movie);
-                    System.out.println(watchList);
                 }
-            } catch (ExceptionHandling.DatabaseException e) {
+            } catch (DatabaseException e) {
                 e.printStackTrace();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
         }
 
     };
 
-   /*  public static void addToWishlistBtnClicked() //method for the addToWishlist Button from MovieCell
-    {
-        //here code what the button should do
-        Movie m = new Movie();
-        System.out.println("added to wishlist -> ");
-    }
-    */
+   public List<Movie> fillWatchlist(List<WatchlistMovieEntity> entities) {
+       List<Movie> watchlistMovies = new ArrayList<>();
+       System.out.println(entities);
+       if (!entities.isEmpty()) {
+           for (WatchlistMovieEntity entity : entities) {
+               watchlistMovies.add(WatchlistRepository.changeWatchlistMovieToMovie(entity));
+           }
+       }
+       return watchlistMovies;
+   }
 
 
     public void switchScene()
@@ -258,12 +270,14 @@ public class HomeController implements Initializable {
         if(switchSceneBtn.getText().equals("Switch to Watchlist"))
         {
             observableMovies.clear();
+            System.out.println(watchList);
             observableMovies.addAll(watchList); //show all movies from the watchlist
             switchSceneBtn.setText("Switch to Homepage");
         }
         else
         {
             observableMovies.clear();
+            System.out.println(watchList);
             observableMovies.addAll(allMovies); //show all movies
             switchSceneBtn.setText("Switch to Watchlist");
         }

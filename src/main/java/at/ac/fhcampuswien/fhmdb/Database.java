@@ -11,10 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Database {
-    // private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/fhmdb";
-    private static final String DATABASE_URL = "jdbc:h2:file: ./db/watchlistdb";
-    private static final String DATABASE_USER = "root";
-    private static final String DATABASE_PASSWORD = "password";
+    public static final String DATABASE_URL = "jdbc:h2:file: ./db/watchlistdb";
+    public static final String DATABASE_USER = "root";
+    public static final String DATABASE_PASSWORD = "password";
 
     private static ConnectionSource connectionSource;
     static Dao<WatchlistMovieEntity, Long> dao;

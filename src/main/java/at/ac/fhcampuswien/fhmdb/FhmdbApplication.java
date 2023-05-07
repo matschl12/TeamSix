@@ -22,11 +22,7 @@ public class FhmdbApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        try {
-            Database.getDatabase().testDB();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public static void main(String[] args) {

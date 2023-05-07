@@ -15,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
-import at.ac.fhcampuswien.fhmdb.HomeController;
-import org.w3c.dom.ls.LSOutput;
 
 import java.util.Objects;
 
@@ -26,7 +24,7 @@ public class MovieCell extends ListCell<Movie> {
     private final Label genres = new Label(); //to show genres
     private final Label rating = new Label(); //to show the rating
 
-    private final Button addToWL = createWishlistButton();
+    private Button addToWL = new Button();
 
     private final VBox layout = new VBox(title, detail, genres, rating, addToWL);
 
@@ -50,6 +48,16 @@ public class MovieCell extends ListCell<Movie> {
                             : "No description available");
             genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get informations to show genres
             rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get information to show the rating
+            if (!HomeController.watchList.isEmpty()) {
+                for (Movie movie2 : HomeController.watchList) {
+                    if (Objects.equals(movie.id, movie2.id)) {
+                        addToWL.setText("Remove from Watchlist");
+                        break;
+                    } else {
+                        addToWL.setText("Add to Watchlist");
+                    }
+                }
+            }
 
             // color scheme
             title.getStyleClass().add("text-yellow");
@@ -58,6 +66,7 @@ public class MovieCell extends ListCell<Movie> {
             genres.setFont(genreFont); //added
             rating.getStyleClass().add("text-white"); //added
             rating.setFont(genreFont); //added
+            addToWL.getStyleClass().add("background-yellow");
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout
@@ -73,25 +82,11 @@ public class MovieCell extends ListCell<Movie> {
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
             setGraphic(layout);
 
+
+
         }
     }
 
-    public Button createWishlistButton ()
-    {
-        Button addToWatchlist = new Button();
-        addToWatchlist.getStyleClass().add("background-yellow"); //added
-        addToWatchlist.setText("Add to Watchlist");
-
-
-        addToWatchlist.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                // Hier Methode aufufen was passieren soll, wenn der Button geklickt wird
-               //clickHandler.onClick();
-            }
-        });
-
-        return addToWatchlist;
-    }
 
     // Exercise 3 Business Layer
     public MovieCell() {
@@ -105,8 +100,11 @@ public class MovieCell extends ListCell<Movie> {
             addToWatchlistClicked.onClick(getItem());
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie: HomeController.watchList) {
-                    if (movie.id.equals(getItem().id)) {
-                        addToWL.setText("Delete from Watchlist");
+                    if (Objects.equals(movie.id, getItem().id)) {
+                        addToWL.setText("Remove from Watchlist");
+                        break;
+                    } else {
+                        addToWL.setText("Add to Watchlist");
                     }
                 }
             } else {

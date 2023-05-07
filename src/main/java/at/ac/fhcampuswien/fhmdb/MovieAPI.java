@@ -3,9 +3,12 @@ package at.ac.fhcampuswien.fhmdb;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,7 +17,7 @@ public class MovieAPI {
     // mainURL of api
     static String mainURL = "https://prog2.fh-campuswien.ac.at";
 
-    public static List<Movie> fetchMovies() {
+    public static List<Movie> fetchMovies() throws MovieApiException {
 
         List<Movie> movies = new ArrayList<>();
 
@@ -25,6 +28,9 @@ public class MovieAPI {
            URL api = new URL(url);
            HttpURLConnection connection = (HttpURLConnection) api.openConnection();
            connection.setRequestMethod("GET");
+           if (connection.getResponseCode() != 200) {
+               throw new MovieApiException("Code wasn't 200");
+           }
            connection.connect();
 
            InputStream inputStream = connection.getInputStream();
@@ -36,8 +42,10 @@ public class MovieAPI {
            movies = objectMapper.readValue(response, new TypeReference<List<Movie>>(){});
 
 
-       } catch (Exception e) {
-           e.printStackTrace();
+       } catch (UnknownHostException e) {
+           throw new MovieApiException("API couldn't connect.");
+       } catch (IOException i) {
+           throw new MovieApiException("Unexpected Error");
        }
 
        return movies;
@@ -87,20 +95,20 @@ public class MovieAPI {
 
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new MovieApiException("API couldn't connect.");
         }
 
         return movies;
 
     }
 
-    public static String newQuerySortAscDesc(String myQueryURL, String AscOrDesc) {
+    /* public static String newQuerySortAscDesc(String myQueryURL, String AscOrDesc) {
 
 
         String url = myQueryURL+"sort=id:"+AscOrDesc;
         return url;
-    }
-    public static String filteredQueryString(String query, String genre, int releaseYear,
+    } */
+    /* public static String filteredQueryString(String query, String genre, int releaseYear,
                                              double rating) {
 
         String url;
@@ -119,7 +127,7 @@ public class MovieAPI {
         }
         return url;
 
-    }
+    } */
 
 
 

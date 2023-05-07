@@ -5,48 +5,65 @@ import java.util.List;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
+import com.j256.ormlite.jdbc.JdbcConnectionSource;
+import com.j256.ormlite.support.ConnectionSource;
 
 import java.sql.SQLException;
+import java.util.Objects;
+
+
 
 public class WatchlistRepository {
-    static Dao <WatchlistMovieEntity, Long> dao = initializeDao();
+    Dao <WatchlistMovieEntity, Long> dao = initializeDao();
 
-    private static Dao<WatchlistMovieEntity, Long> initializeDao() {
+    public static ConnectionSource createConnectionSource() throws SQLException
+    {
+        return new JdbcConnectionSource(Database.DATABASE_URL,Database.DATABASE_USER,Database.DATABASE_PASSWORD);
+    }
+
+   private static Dao<WatchlistMovieEntity, Long> initializeDao() {
         try {
-            return Database.getWatchlistMovieDao();
+            return DaoManager.createDao(createConnectionSource(), WatchlistMovieEntity.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static void removeMovie(WatchlistMovieEntity movie) throws ExceptionHandling.DatabaseException {
-        try {
-            dao.delete(movie);
-        } catch (SQLException e) {
-            throw new ExceptionHandling.DatabaseException("Error while removing movie from watchlist in database", e);
+    public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException, SQLException {
+        List<WatchlistMovieEntity> entityList = getAllMovies();
+        for (WatchlistMovieEntity entity : entityList) {
+            if (Objects.equals(movie.apiId, entity.apiId)) {
+                dao.delete(entity);
+            }
         }
+
     }
 
-    public static List<WatchlistMovieEntity> getAllMovies() throws ExceptionHandling.DatabaseException {
-        try {
-            return dao.queryForAll();
-        } catch (SQLException e) {
-            throw new ExceptionHandling.DatabaseException("Error while fetching watchlist movies from database", e);
-        }
+    public List<WatchlistMovieEntity> getAllMovies() throws SQLException{
+        return dao.queryForAll();
     }
 
-    public static void addMovie(WatchlistMovieEntity movie) throws ExceptionHandling.DatabaseException {
+    public void addMovie(WatchlistMovieEntity movie) throws DatabaseException {
         try {
-            dao.createOrUpdate(movie);
+            dao.create(movie);
         } catch (SQLException e) {
-            throw new ExceptionHandling.DatabaseException("Error while adding movie to watchlist in database", e);
+            throw new DatabaseException("Error while adding movie to watchlist in database", e);
         }
     }
 
     public static WatchlistMovieEntity changeMovieToWatchlistMovie(Movie movie) {
         WatchlistMovieEntity entity = new WatchlistMovieEntity(movie.id, movie.getTitle(), movie.getDescription(), movie.getGenres(), movie.getReleaseYear(), movie.imgUrl, movie.lengthInMinutes, movie.getRating());
         return entity;
+    }
+
+    public static Movie changeWatchlistMovieToMovie(WatchlistMovieEntity entity) {
+       for (Movie movie : HomeController.allMovies) {
+           if (Objects.equals(movie.id, entity.apiId)) {
+               return movie;
+           }
+       }
+       return null;
     }
 
 }
