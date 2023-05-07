@@ -19,6 +19,7 @@ public class Database {
     static Dao<WatchlistMovieEntity, Long> dao;
     private static Database instance;
 
+    // Database Constructor
     private Database() {
         try {
             createConnectionSource();
@@ -28,6 +29,7 @@ public class Database {
             e.printStackTrace();
         }
     }
+    // database for testing purposes
     public void testDB() throws SQLException {
         WatchlistMovieEntity entity = new WatchlistMovieEntity("abcde", "Hallo", "Ja", new ArrayList<>(), 5, "test", 6, 8.2);
         dao.create(entity);
@@ -38,6 +40,7 @@ public class Database {
         }
         return instance;
     }
+    // create connection source
     public void createConnectionSource()
     {
         try {
@@ -47,6 +50,7 @@ public class Database {
         }
     }
 
+    // methods not in use
     public static ConnectionSource getConnectionSource() throws SQLException {
         if (connectionSource == null) {
             connectionSource = new JdbcConnectionSource(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
@@ -54,11 +58,14 @@ public class Database {
         return connectionSource;
     }
 
+    // create tables
     public void createTables() throws SQLException
     {
         TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
 
     }
+
+    // we don't use this method
 
     public static Dao<WatchlistMovieEntity, Long> getWatchlistMovieDao() throws SQLException {
         if (dao == null) {

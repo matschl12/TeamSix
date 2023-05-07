@@ -30,6 +30,7 @@ public class WatchlistRepository {
         return null;
     }
 
+    // remove movie from database
     public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException, SQLException {
         List<WatchlistMovieEntity> entityList = getAllMovies();
         for (WatchlistMovieEntity entity : entityList) {
@@ -40,10 +41,12 @@ public class WatchlistRepository {
 
     }
 
+    // get all movies from database
     public List<WatchlistMovieEntity> getAllMovies() throws SQLException{
         return dao.queryForAll();
     }
 
+    // add movie to database
     public void addMovie(WatchlistMovieEntity movie) throws DatabaseException {
         try {
             dao.create(movie);
@@ -52,11 +55,13 @@ public class WatchlistRepository {
         }
     }
 
+    // movie to watchlistmovieentity change
     public static WatchlistMovieEntity changeMovieToWatchlistMovie(Movie movie) {
         WatchlistMovieEntity entity = new WatchlistMovieEntity(movie.id, movie.getTitle(), movie.getDescription(), movie.getGenres(), movie.getReleaseYear(), movie.imgUrl, movie.lengthInMinutes, movie.getRating());
         return entity;
     }
 
+    // watchlistmovieentity to movie change
     public static Movie changeWatchlistMovieToMovie(WatchlistMovieEntity entity) {
        for (Movie movie : HomeController.allMovies) {
            if (Objects.equals(movie.id, entity.apiId)) {

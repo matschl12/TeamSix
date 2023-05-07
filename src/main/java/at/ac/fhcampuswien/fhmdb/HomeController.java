@@ -62,6 +62,7 @@ public class HomeController implements Initializable {
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
+        // add watchlist movies from database to watchlist
         try {
             WatchlistRepository wr = new WatchlistRepository();
             watchList.addAll(fillWatchlist(wr.getAllMovies()));
@@ -232,6 +233,7 @@ public class HomeController implements Initializable {
     }
 
     // Exercise 3 Business Layer
+    // onAddToWatchlistButton clicked event
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
@@ -253,6 +255,7 @@ public class HomeController implements Initializable {
 
     };
 
+    // fill watchlist with watchlistmovies
    public List<Movie> fillWatchlist(List<WatchlistMovieEntity> entities) {
        List<Movie> watchlistMovies = new ArrayList<>();
        System.out.println(entities);
@@ -265,6 +268,7 @@ public class HomeController implements Initializable {
    }
 
 
+   // switch between watchlist and allMovies
     public void switchScene()
     {
         if(switchSceneBtn.getText().equals("Switch to Watchlist"))

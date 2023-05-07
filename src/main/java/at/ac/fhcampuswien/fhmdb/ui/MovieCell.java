@@ -48,6 +48,7 @@ public class MovieCell extends ListCell<Movie> {
                             : "No description available");
             genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get informations to show genres
             rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get information to show the rating
+            // change text of addWatchList Button
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie2 : HomeController.watchList) {
                     if (Objects.equals(movie.id, movie2.id)) {
@@ -93,6 +94,7 @@ public class MovieCell extends ListCell<Movie> {
 
 
     }
+    // MovieCell with addToWatchListClicked Button
     public MovieCell(ClickEventHandler<Movie> addToWatchlistClicked) {
         super();
         // this.clickHandler = addToWatchlistClicked;
