@@ -6,7 +6,7 @@ import java.util.List;
 
 public class WatchlistMovieEntity {
     long id;
-    String aplid;
+    String apiId;
     String title;
     String description;
     String genres;
@@ -19,8 +19,8 @@ public class WatchlistMovieEntity {
 
     }
 
-    public WatchlistMovieEntity(String aplid, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lenghtInMinutes, double rating) {
-        this.aplid = aplid;
+    public WatchlistMovieEntity(String apiId, String title, String description, List<Genre> genres, int releaseYear, String imgUrl, int lenghtInMinutes, double rating) {
+        this.apiId = apiId;
         this.title = title;
         this.description = description;
         this.genres = genresToString(genres);
