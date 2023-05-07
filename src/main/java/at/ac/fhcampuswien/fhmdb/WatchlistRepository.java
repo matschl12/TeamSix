@@ -27,6 +27,7 @@ public class WatchlistRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
