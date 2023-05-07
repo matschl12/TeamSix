@@ -3,8 +3,6 @@ package at.ac.fhcampuswien.fhmdb.ui;
 import at.ac.fhcampuswien.fhmdb.ClickEventHandler;
 import at.ac.fhcampuswien.fhmdb.HomeController;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,9 +22,11 @@ public class MovieCell extends ListCell<Movie> {
     private final Label genres = new Label(); //to show genres
     private final Label rating = new Label(); //to show the rating
 
-    private Button addToWL = new Button();
+    private Button addToWLBtn = new Button();
 
-    private final VBox layout = new VBox(title, detail, genres, rating, addToWL);
+    private Button detailsBtn = new Button();
+
+    private final VBox layout = new VBox(title, detail, genres, rating, addToWLBtn, detailsBtn);
 
     // private ClickEventHandler<Movie> clickHandler;
 
@@ -52,13 +52,17 @@ public class MovieCell extends ListCell<Movie> {
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie2 : HomeController.watchList) {
                     if (Objects.equals(movie.id, movie2.id)) {
-                        addToWL.setText("Remove from Watchlist");
+                        addToWLBtn.setText("Remove from Watchlist");
                         break;
                     } else {
-                        addToWL.setText("Add to Watchlist");
+                        addToWLBtn.setText("Add to Watchlist");
                     }
                 }
             }
+
+            detailsBtn.setText("Show Details"); //added
+            detailsBtn.setDisable(true); //temporary disabled
+
 
             // color scheme
             title.getStyleClass().add("text-yellow");
@@ -67,7 +71,8 @@ public class MovieCell extends ListCell<Movie> {
             genres.setFont(genreFont); //added
             rating.getStyleClass().add("text-white"); //added
             rating.setFont(genreFont); //added
-            addToWL.getStyleClass().add("background-yellow");
+            addToWLBtn.getStyleClass().add("background-yellow"); //added
+            detailsBtn.getStyleClass().add("background-yellow"); //added
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout
@@ -89,6 +94,7 @@ public class MovieCell extends ListCell<Movie> {
     }
 
 
+
     // Exercise 3 Business Layer
     public MovieCell() {
 
@@ -98,19 +104,19 @@ public class MovieCell extends ListCell<Movie> {
     public MovieCell(ClickEventHandler<Movie> addToWatchlistClicked) {
         super();
         // this.clickHandler = addToWatchlistClicked;
-        addToWL.setOnMouseClicked(mouseEvent -> {
+        addToWLBtn.setOnMouseClicked(mouseEvent -> {
             addToWatchlistClicked.onClick(getItem());
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie: HomeController.watchList) {
                     if (Objects.equals(movie.id, getItem().id)) {
-                        addToWL.setText("Remove from Watchlist");
+                        addToWLBtn.setText("Remove from Watchlist");
                         break;
                     } else {
-                        addToWL.setText("Add to Watchlist");
+                        addToWLBtn.setText("Add to Watchlist");
                     }
                 }
             } else {
-                addToWL.setText("Add to Watchlist");
+                addToWLBtn.setText("Add to Watchlist");
             }
         });
     }
