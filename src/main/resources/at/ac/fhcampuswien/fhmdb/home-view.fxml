@@ -21,28 +21,7 @@
             </padding>
          </Label>
          <Label styleClass="text-white" stylesheets="@styles.css" text="Welcome to TeamSix-FHMDb!" />
-         <MenuBar id="navBar" fx:id="navBar" prefHeight="26.0" prefWidth="141.0">
-           <menus>
-             <Menu mnemonicParsing="false" text="File">
-               <items>
-                 <MenuItem mnemonicParsing="false" text="Close" />
-               </items>
-             </Menu>
-             <Menu mnemonicParsing="false" text="Edit">
-               <items>
-                 <MenuItem mnemonicParsing="false" text="Delete" />
-               </items>
-             </Menu>
-             <Menu mnemonicParsing="false" text="Help">
-               <items>
-                 <MenuItem mnemonicParsing="false" text="About" />
-               </items>
-             </Menu>
-           </menus>
-            <HBox.margin>
-               <Insets left="136.0" />
-            </HBox.margin>
-         </MenuBar>
+         <JFXButton fx:id="switchSceneBtn" mnemonicParsing="false" onAction="#switchScene" styleClass="background-yellow" stylesheets="@styles.css" text="Switch to Watchlist" />
       </children>
    </HBox>
    <HBox spacing="5.0" styleClass="background-black" stylesheets="@styles.css">

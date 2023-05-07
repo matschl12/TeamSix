@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import at.ac.fhcampuswien.fhmdb.HomeController;
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.Objects;
 
@@ -25,9 +26,11 @@ public class MovieCell extends ListCell<Movie> {
     private final Label genres = new Label(); //to show genres
     private final Label rating = new Label(); //to show the rating
 
-    private final Button addToWatchlist = new Button();
+    private final Button addToWL = createWishlistButton();
 
-    private final VBox layout = new VBox(title, detail, genres, rating, addToWatchlist);
+    private final VBox layout = new VBox(title, detail, genres, rating, addToWL);
+
+    private ClickEventHandler<Movie> clickHandler;
 
     HomeController controller;
     Font genreFont = Font.font("Verdana", FontPosture.ITALIC, 10); //to make genre font italic
@@ -48,7 +51,6 @@ public class MovieCell extends ListCell<Movie> {
                             : "No description available");
             genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get informations to show genres
             rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get information to show the rating
-            addToWatchlist.setText("Add to Watchlist");
 
             // color scheme
             title.getStyleClass().add("text-yellow");
@@ -57,7 +59,6 @@ public class MovieCell extends ListCell<Movie> {
             genres.setFont(genreFont); //added
             rating.getStyleClass().add("text-white"); //added
             rating.setFont(genreFont); //added
-            addToWatchlist.getStyleClass().add("background-yellow"); //added
             layout.setBackground(new Background(new BackgroundFill(Color.web("#454545"), null, null)));
 
             // layout
@@ -73,31 +74,40 @@ public class MovieCell extends ListCell<Movie> {
             layout.alignmentProperty().set(javafx.geometry.Pos.CENTER_LEFT);
             setGraphic(layout);
 
-
-            addToWatchlist.setOnAction(new EventHandler<ActionEvent>() { //clickOnEvent for the addToWatchlist button which uses method from the controller class
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    controller.addToWishlistBtnClicked();
-                }
-            });
         }
+    }
+
+    public Button createWishlistButton ()
+    {
+        Button addToWatchlist = new Button();
+        addToWatchlist.getStyleClass().add("background-yellow"); //added
+        addToWatchlist.setText("Add to Watchlist");
+
+
+        addToWatchlist.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent e) {
+                // Hier Methode aufufen was passieren soll, wenn der Button geklickt wird
+               //clickHandler.onClick();
+            }
+        });
+
+        return addToWatchlist;
     }
 
     // Exercise 3 Business Layer
     public MovieCell() {
 
+
     }
-
-
-
-    public MovieCell(ClickEventHandler addToWatchlistClicked) {
+    public MovieCell(ClickEventHandler<Movie> addToWatchlistClicked) {
         super();
-        addToWatchlist.setOnMouseClicked(mouseEvent -> {
+        this.clickHandler = addToWatchlistClicked;
+        addToWL.setOnMouseClicked(mouseEvent -> {
             addToWatchlistClicked.onClick(getItem());
             if (!HomeController.watchList.isEmpty()) {
                 for (Movie movie: HomeController.watchList) {
                     if (movie.id.equals(getItem().id)) {
-                        addToWatchlist.setText("Delete from Watchlist");
+                        addToWL.setText("Delete from Watchlist");
                     }
                 }
             }

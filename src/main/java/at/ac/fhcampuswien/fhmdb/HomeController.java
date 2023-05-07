@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.MovieAPI.*;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, ClickEventHandler<MovieCell> {
     @FXML
     public JFXButton searchBtn;
 
@@ -43,7 +43,7 @@ public class HomeController implements Initializable {
     @FXML
     public JFXButton resetBtn;
     @FXML
-    public JFXButton addToWishlistBtn; //for clickOnEvent add to wishlist
+    public JFXButton switchSceneBtn;
 
     public List<Movie> allMovies = Movie.initializeMovies();
 
@@ -159,7 +159,6 @@ public class HomeController implements Initializable {
             resetFilter();
         });
 
-
     }
     // homeController beginning state
     public void initializeHomeController() {
@@ -225,6 +224,12 @@ public class HomeController implements Initializable {
     }
 
     // Exercise 3 Business Layer
+    @Override
+    public void onClick(MovieCell cell)
+    {
+        System.out.println("Button was clicked");
+    }
+
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
@@ -246,7 +251,24 @@ public class HomeController implements Initializable {
     public static void addToWishlistBtnClicked() //method for the addToWishlist Button from MovieCell
     {
         //here code what the button should do
-        System.out.println("do stuff");
+        Movie m = new Movie();
+        System.out.println("added to wishlist -> ");
+    }
+
+    public void switchScene()
+    {
+        if(switchSceneBtn.getText().equals("Switch to Watchlist"))
+        {
+            observableMovies.clear();
+            observableMovies.addAll(watchList); //show all movies from the watchlist
+            switchSceneBtn.setText("Switch to Homepage");
+        }
+        else
+        {
+            observableMovies.clear();
+            observableMovies.addAll(allMovies); //show all movies
+            switchSceneBtn.setText("Switch to Watchlist");
+        }
     }
 
 
