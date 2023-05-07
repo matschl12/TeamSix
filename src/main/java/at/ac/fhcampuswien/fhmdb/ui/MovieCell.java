@@ -30,9 +30,8 @@ public class MovieCell extends ListCell<Movie> {
 
     private final VBox layout = new VBox(title, detail, genres, rating, addToWL);
 
-    private ClickEventHandler<Movie> clickHandler;
+    // private ClickEventHandler<Movie> clickHandler;
 
-    HomeController controller;
     Font genreFont = Font.font("Verdana", FontPosture.ITALIC, 10); //to make genre font italic
 
     @Override
@@ -101,7 +100,7 @@ public class MovieCell extends ListCell<Movie> {
     }
     public MovieCell(ClickEventHandler<Movie> addToWatchlistClicked) {
         super();
-        this.clickHandler = addToWatchlistClicked;
+        // this.clickHandler = addToWatchlistClicked;
         addToWL.setOnMouseClicked(mouseEvent -> {
             addToWatchlistClicked.onClick(getItem());
             if (!HomeController.watchList.isEmpty()) {
@@ -110,6 +109,8 @@ public class MovieCell extends ListCell<Movie> {
                         addToWL.setText("Delete from Watchlist");
                     }
                 }
+            } else {
+                addToWL.setText("Add to Watchlist");
             }
         });
     }

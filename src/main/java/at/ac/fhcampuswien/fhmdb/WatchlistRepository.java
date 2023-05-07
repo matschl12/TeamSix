@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.fhmdb;
 
 import java.util.List;
 
+import at.ac.fhcampuswien.fhmdb.models.Movie;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 
@@ -43,5 +44,9 @@ public class WatchlistRepository {
         }
     }
 
+    public static WatchlistMovieEntity changeMovieToWatchlistMovie(Movie movie) {
+        WatchlistMovieEntity entity = new WatchlistMovieEntity(movie.id, movie.getTitle(), movie.getDescription(), movie.getGenres(), movie.getReleaseYear(), movie.imgUrl, movie.lengthInMinutes, movie.getRating());
+        return entity;
+    }
 
 }

@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.models.Genre;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -7,23 +8,37 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class Database {
-    private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/fhmdb";
+    // private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/fhmdb";
+    private static final String DATABASE_URL = "jdbc:h2:file: ./db/watchlistdb";
     private static final String DATABASE_USER = "root";
     private static final String DATABASE_PASSWORD = "password";
 
     private static ConnectionSource connectionSource;
     static Dao<WatchlistMovieEntity, Long> dao;
+    private static Database instance;
 
-    /* private Database() {
+    private Database() {
         try {
             createConnectionSource();
-            dao = getWatchlistMovieDao();
+            dao = DaoManager.createDao(connectionSource, WatchlistMovieEntity.class);
             createTables();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    } */
+    }
+    public void testDB() throws SQLException {
+        WatchlistMovieEntity entity = new WatchlistMovieEntity("abcde", "Hallo", "Ja", new ArrayList<>(), 5, "test", 6, 8.2);
+        dao.create(entity);
+    }
+    public static Database getDatabase() {
+        if(instance == null) {
+            instance = new Database();
+        }
+        return instance;
+    }
     public void createConnectionSource()
     {
         try {
@@ -42,7 +57,7 @@ public class Database {
 
     public void createTables() throws SQLException
     {
-        TableUtils.createTable(connectionSource, WatchlistMovieEntity.class);
+        TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
 
     }
 

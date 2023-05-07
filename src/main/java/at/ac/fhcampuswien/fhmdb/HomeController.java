@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 import static at.ac.fhcampuswien.fhmdb.MovieAPI.*;
 
-public class HomeController implements Initializable, ClickEventHandler<MovieCell> {
+public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
 
@@ -59,7 +59,7 @@ public class HomeController implements Initializable, ClickEventHandler<MovieCel
 
         // initialize UI stuff
         movieListView.setItems(observableMovies);   // set data of observable list to list view
-        movieListView.setCellFactory(movieListView -> new MovieCell()); // use custom cell factory to display data
+        movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
         genreComboBox.setPromptText("Filter by Genre");
@@ -224,22 +224,18 @@ public class HomeController implements Initializable, ClickEventHandler<MovieCel
     }
 
     // Exercise 3 Business Layer
-    @Override
-    public void onClick(MovieCell cell)
-    {
-        System.out.println("Button was clicked");
-    }
-
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
             try {
                 if(watchList.contains(movie)){
-                    WatchlistRepository.removeMovie((WatchlistMovieEntity) clickedItem);
+                    WatchlistRepository.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.remove(movie);
+                    System.out.println(watchList);
                 } else {
-                    WatchlistRepository.addMovie((WatchlistMovieEntity) clickedItem);
+                    WatchlistRepository.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.add(movie);
+                    System.out.println(watchList);
                 }
             } catch (ExceptionHandling.DatabaseException e) {
                 e.printStackTrace();
@@ -248,12 +244,14 @@ public class HomeController implements Initializable, ClickEventHandler<MovieCel
 
     };
 
-    public static void addToWishlistBtnClicked() //method for the addToWishlist Button from MovieCell
+   /*  public static void addToWishlistBtnClicked() //method for the addToWishlist Button from MovieCell
     {
         //here code what the button should do
         Movie m = new Movie();
         System.out.println("added to wishlist -> ");
     }
+    */
+
 
     public void switchScene()
     {
@@ -270,10 +268,6 @@ public class HomeController implements Initializable, ClickEventHandler<MovieCel
             switchSceneBtn.setText("Switch to Watchlist");
         }
     }
-
-
-
-
 
     // main method for method testing
     public static void main(String[] args) {
