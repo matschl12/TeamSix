@@ -1,12 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.util.ArrayList;
 import java.util.List;
-
 import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMovies;
-import static at.ac.fhcampuswien.fhmdb.MovieAPI.fetchMoviesFilter;
 
 // @JsonIgnoreProperties(ignoreUnknown = true, value = {"id"})
 public class Movie {
@@ -64,7 +59,7 @@ public class Movie {
     public List<String> getDirectors() {return directors;}
 
     public static List<Movie> initializeMovies(){
-        List<Movie> movies = fetchMovies();
+        List<Movie> movies = fetchMovies("","","","");
         return movies;
 
     }

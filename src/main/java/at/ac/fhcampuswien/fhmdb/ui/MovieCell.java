@@ -46,19 +46,19 @@ public class MovieCell extends ListCell<Movie> {
                     movie.getDescription() != null
                             ? movie.getDescription()
                             : "No description available");
-            genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get informations to show genres
+            genres.setText(movie.getGenres().toString().replace("[", "").replace("]", "")); //to get information to show genres
             rating.setText("Rating: " + String.valueOf(movie.getRating())); //to get information to show the rating
             // change text of addWatchList Button
-            if (!HomeController.watchList.isEmpty()) {
-                for (Movie movie2 : HomeController.watchList) {
-                    if (Objects.equals(movie.id, movie2.id)) {
-                        addToWLBtn.setText("Remove from Watchlist");
-                        break;
-                    } else {
-                        addToWLBtn.setText("Add to Watchlist");
-                    }
+            for (Movie movie2 : HomeController.allMovies) {
+                addToWLBtn.setText("Add to Watchlist");
+                if (HomeController.watchList.contains(movie) && Objects.equals(movie.id, movie2.id)) {
+                    addToWLBtn.setText("Remove from Watchlist");
+                    break;
+                } else {
+                    addToWLBtn.setText("Add to Watchlist");
                 }
-            }
+                }
+
 
             detailsBtn.setText("Show Details"); //added
             detailsBtn.setDisable(true); //temporary disabled
