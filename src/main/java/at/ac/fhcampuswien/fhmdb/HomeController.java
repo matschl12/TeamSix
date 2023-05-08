@@ -232,8 +232,7 @@ public class HomeController implements Initializable {
             WatchlistRepository wr = new WatchlistRepository();
             try {
                 if(watchList.contains(movie)){
-                        wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
-
+                    wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.remove(movie);
                     reloadWatchlist();
                 } else {
@@ -244,7 +243,7 @@ public class HomeController implements Initializable {
             } catch (DatabaseException e) {
                 e.printStackTrace();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                throw new DatabaseException("Unexpected Error while trying to add or remove Movie",e);
             }
         }
 

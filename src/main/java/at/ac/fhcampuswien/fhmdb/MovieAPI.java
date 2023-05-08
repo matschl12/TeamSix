@@ -12,6 +12,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MovieAPI {
@@ -31,10 +32,14 @@ public class MovieAPI {
 
         System.out.println(url);
 
+
         try {
             URL api = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) api.openConnection();
             connection.setRequestMethod("GET");
+            if (connection.getResponseCode() != 200) {
+                throw new MovieApiException("Code wasn't 200");
+            }
             connection.connect();
 
             InputStream inputStream = connection.getInputStream();
