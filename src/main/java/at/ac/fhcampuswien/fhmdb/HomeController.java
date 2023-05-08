@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.sql.SQLException;
@@ -231,7 +232,8 @@ public class HomeController implements Initializable {
             WatchlistRepository wr = new WatchlistRepository();
             try {
                 if(watchList.contains(movie)){
-                    wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                        wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+
                     watchList.remove(movie);
                     reloadWatchlist();
                 } else {

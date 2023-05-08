@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Database {
-    public static final String DATABASE_URL = "jdbc:h2:file: ./db/watchlistdb";
+
+    public static int counter=0;
+    public static String DATABASE_URL = "jdbc:h2:file: ./db/watchlist";
     public static final String DATABASE_USER = "root";
     public static final String DATABASE_PASSWORD = "password";
 
@@ -43,10 +45,10 @@ public class Database {
     // create connection source
     public void createConnectionSource()
     {
+
         try {
             connectionSource = new JdbcConnectionSource(DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {e.printStackTrace();
         }
     }
 

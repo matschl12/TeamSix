@@ -33,14 +33,38 @@ public class WatchlistRepository {
 
     // remove movie from database
     public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException, SQLException {
-        List<WatchlistMovieEntity> entityList = getAllMovies();
-        for (WatchlistMovieEntity entity : entityList) {
-            if (Objects.equals(movie.apiId, entity.apiId)) {
-                dao.delete(entity);
+
+            List<WatchlistMovieEntity> entityList = getAllMovies();
+            for (WatchlistMovieEntity entity : entityList) {
+                if (Objects.equals(movie.apiId, entity.apiId)) {
+                    dao.delete(entity);
+                }
             }
+        }/* catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            Database.counter++;
+            if(Database.counter>5){Database.DATABASE_URL="";};
+
+//            justThrowAnException();
+            throw new TestException("This is a test exception for alert handling.");
+
         }
 
     }
+
+    public class TestException extends Exception {
+        public TestException(String message) {
+            super(message);
+        }
+    }
+
+
+
+    //provoke an Exception
+    public void justThrowAnException() throws TriJAVAfxAlert {
+        throw new TriJAVAfxAlert("tri", new Throwable());
+    }*/
 
     // get all movies from database
     public List<WatchlistMovieEntity> getAllMovies() throws SQLException{
@@ -49,6 +73,7 @@ public class WatchlistRepository {
 
     // add movie to database
     public void addMovie(WatchlistMovieEntity movie) throws DatabaseException {
+
         try {
             dao.create(movie);
         } catch (SQLException e) {
