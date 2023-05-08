@@ -7,8 +7,8 @@ public class MovieApiException extends RuntimeException {
     public MovieApiException(String message) {
         super(message);
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Exception Dialog");
-        alert.setHeaderText("An error occurred:");
+        alert.setTitle("An exception occurred");
+        alert.setHeaderText("MovieApiException");
         alert.setContentText(message);
         alert.showAndWait();
     }

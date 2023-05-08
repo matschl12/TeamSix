@@ -40,31 +40,7 @@ public class WatchlistRepository {
                     dao.delete(entity);
                 }
             }
-        }/* catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Database.counter++;
-            if(Database.counter>5){Database.DATABASE_URL="";};
-
-//            justThrowAnException();
-            throw new TestException("This is a test exception for alert handling.");
-
-        }
-
     }
-
-    public class TestException extends Exception {
-        public TestException(String message) {
-            super(message);
-        }
-    }
-
-
-
-    //provoke an Exception
-    public void justThrowAnException() throws TriJAVAfxAlert {
-        throw new TriJAVAfxAlert("tri", new Throwable());
-    }*/
 
     // get all movies from database
     public List<WatchlistMovieEntity> getAllMovies() throws SQLException{
