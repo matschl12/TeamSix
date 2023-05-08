@@ -16,8 +16,6 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static at.ac.fhcampuswien.fhmdb.MovieAPI.*;
-
 public class HomeController implements Initializable {
     @FXML
     public JFXButton searchBtn;
@@ -89,15 +87,6 @@ public class HomeController implements Initializable {
 
         ratingComboBox.setPromptText("Filter by Rating");
         List<Double> allRatings = new ArrayList<>();
-        /*for (Movie movie : allMovies) {
-            double rating = movie.getRating();
-            if(!allRatings.contains(rating)) {
-                allRatings.add(rating);
-            }
-            Collections.sort(allRatings);
-
-        }
-        */
          for(double i = 1 ; i<=10; i = i + 0.5)
          {
              allRatings.add(i);
@@ -123,29 +112,31 @@ public class HomeController implements Initializable {
                         genreString = genreComboBox.getValue().toString();
                     }
 
-                    int releaseYearInt = 0;
+                    String releaseYearInt = "";
                     if (yearComboBox.getValue() != null){
 
-                        releaseYearInt = (int) yearComboBox.getValue();
+                        releaseYearInt = yearComboBox.getValue().toString();
                     }
 
-                    double ratingDouble = 0;
+                    String ratingDouble = "";
                     if (ratingComboBox.getValue() != null ) {
-                        ratingDouble = (Double) ratingComboBox.getValue();
+                        ratingDouble = ratingComboBox.getValue().toString();
                     }
+
+                    switchSceneBtn.setText("Switch to Watchlist");
 
                     observableMovies.clear();
-                    observableMovies.addAll(fetchMoviesFilter(searchFieldString,genreString,releaseYearInt,ratingDouble));
+                    observableMovies.addAll(MovieAPI.fetchMovies(searchFieldString,genreString,releaseYearInt,ratingDouble));
 
 
                 });
 
-        searchField.onKeyReleasedProperty().addListener(observable -> {
+        /* searchField.onKeyReleasedProperty().addListener(observable -> {
             observableMovies.clear();
-            observableMovies.addAll(fetchMovies());
+            observableMovies.addAll(fetchMoviesFilter("","","",""));
             initializeHomeController();
             resetFilter();
-        });
+        }); */
 
 
         // Sort button example:
@@ -242,9 +233,11 @@ public class HomeController implements Initializable {
                 if(watchList.contains(movie)){
                     wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.remove(movie);
+                    reloadWatchlist();
                 } else {
                     wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                     watchList.add(movie);
+                    reloadWatchlist();
                 }
             } catch (DatabaseException e) {
                 e.printStackTrace();
@@ -267,6 +260,12 @@ public class HomeController implements Initializable {
        return watchlistMovies;
    }
 
+   public void reloadWatchlist() {
+       if (switchSceneBtn.getText().equals("Switch to Homepage")) {
+           observableMovies.clear();
+           observableMovies.addAll(watchList);
+       }
+   }
 
    // switch between watchlist and allMovies
     public void switchScene()
