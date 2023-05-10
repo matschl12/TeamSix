@@ -2,6 +2,9 @@ package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortASCENDING;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortDESCENDING;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeAll;
@@ -30,7 +33,7 @@ class HomeControllerTest {
     @Test
     void observable_movies_and_allMovies_are_equal() {
         homeController.initializeHomeController();
-        assertEquals(homeController.allMovies, homeController.observableMovies);
+        assertEquals(HomeController.allMovies, homeController.observableMovies);
     }
     @Test
     public void test_get_methods_of_title_description_and_genres() {
@@ -44,6 +47,8 @@ class HomeControllerTest {
         assertEquals(Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), movie.getGenres());
     }
 
+
+    static MovieSortStates sortStates = new MovieSortStates();
 
     @Test
     void movies_are_correctly_sorted_ascending() {
@@ -64,8 +69,9 @@ class HomeControllerTest {
         actual.add(movie2);
         actual.add(movie3);
 
-        homeController.sortAscending(actual);
 
+        sortStates.setState(new SortASCENDING());
+        sortStates.sortMovies(actual);
         assertEquals(expected, actual);
     }
 
@@ -90,7 +96,8 @@ class HomeControllerTest {
         actual.add(movie2);
         actual.add(movie3);
 
-        homeController.sortDescending(actual);
+        sortStates.setState(new SortDESCENDING());
+        sortStates.sortMovies(actual);
 
         assertEquals(expected, actual);
     }
@@ -131,26 +138,23 @@ class HomeControllerTest {
 
     @Test
     public void test_get_most_popular_actor_method() {
-        List<Movie> allMovies = homeController.allMovies;
         String expected = "Tom Hanks";
-        String actual = getMostPopularActor(allMovies);
+        String actual = getMostPopularActor(HomeController.allMovies);
         assertEquals(expected,actual);
 
     }
 
     @Test
     public void test_get_longest_movie_title_method() {
-        List<Movie> allMovies = homeController.allMovies;
         int expected = 46;
-        int actual = getLongestMovieTitle(allMovies);
+        int actual = getLongestMovieTitle(HomeController.allMovies);
         assertEquals(expected,actual);
     }
 
     @Test
     public void test_count_movies_from_method() {
-        List<Movie> allMovies = homeController.allMovies;
         long expected = 2;
-        long actual = countMoviesFrom(allMovies, "Peter Jackson");
+        long actual = countMoviesFrom(HomeController.allMovies, "Peter Jackson");
         assertEquals(expected,actual);
     }
 

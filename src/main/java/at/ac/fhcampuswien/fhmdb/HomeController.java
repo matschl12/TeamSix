@@ -1,8 +1,10 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.Exceptions.DatabaseException;
+import at.ac.fhcampuswien.fhmdb.Exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortASCENDING;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortDESCENDING;
@@ -14,13 +16,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, Observer {
     @FXML
     public JFXButton searchBtn;
 
@@ -57,19 +60,29 @@ public class HomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Database.getDatabase();
-        allMovies = Movie.initializeMovies();
+        try {
+            Database.getDatabase();
+        } catch (DatabaseException e) {
+            System.out.println();
+        }
+        try {
+            allMovies = Movie.initializeMovies();
+        } catch (MovieApiException e) {
+            System.out.println();
+        }
         observableMovies.addAll(allMovies);         // add dummy data to observable list
 
         // initialize UI stuff
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
+        movieListView.setItems(observableMovies);   // set data of observable list to list view
+
+
         // add watchlist movies from database to watchlist
         try {
-            WatchlistRepository wr = new WatchlistRepository();
+            WatchlistRepository wr = WatchlistRepository.getInstance();
             watchList.addAll(fillWatchlist(wr.getAllMovies()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (DatabaseException e) {
+            System.out.println("Database Exception");
         }
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
@@ -131,18 +144,9 @@ public class HomeController implements Initializable {
 
                     observableMovies.clear();
                     observableMovies.addAll(MovieAPI.fetchMovies(searchFieldString,genreString,releaseYearInt,ratingDouble));
-
-
                 });
 
-        /* searchField.onKeyReleasedProperty().addListener(observable -> {
-            observableMovies.clear();
-            observableMovies.addAll(fetchMoviesFilter("","","",""));
-            initializeHomeController();
-            resetFilter();
-        }); */
-
-        // Sort button example:
+        // Sort button example: changed due to Exercise 4
         sortBtn.setOnAction(actionEvent -> {
             MovieSortStates sortState = new MovieSortStates();
             if(sortBtn.getText().equals("Sort (asc)")) {
@@ -150,8 +154,6 @@ public class HomeController implements Initializable {
                 // sortAscending(observableMovies);
                 sortState.setState(new SortASCENDING());
                 sortState.sortMovies(observableMovies);
-                System.out.println(sortState);
-
                 sortBtn.setText("Sort (desc)");
             } else {
                 // TODO sort observableMovies descending
@@ -175,16 +177,6 @@ public class HomeController implements Initializable {
         observableMovies.addAll(allMovies);
     }
 
-    // sort movies ascending
-    public void sortAscending(ObservableList<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle));
-    }
-
-    // sort movies descending
-    public void sortDescending(ObservableList<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle).reversed());
-    }
-
     // reset button method
     public void resetFilter() {
         genreComboBox.setPromptText("Filter by Genre");
@@ -195,6 +187,8 @@ public class HomeController implements Initializable {
         ratingComboBox.setValue(null);
         searchField.setText("");
     }
+
+    // Exercise 2
 
     // getMostPopularActor method
 
@@ -207,7 +201,6 @@ public class HomeController implements Initializable {
                 .map(Map.Entry::getKey)
                 .orElse("");
     }
-
 
     // longest Movie title - method
     public static int getLongestMovieTitle(List<Movie> movies) {
@@ -234,27 +227,20 @@ public class HomeController implements Initializable {
 
     // Exercise 3 Business Layer
     // onAddToWatchlistButton clicked event
-    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem)  -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
-            WatchlistRepository wr = new WatchlistRepository();
-            try {
-                if(watchList.contains(movie)){
-                    wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
-                    watchList.remove(movie);
-                    reloadWatchlist();
-                } else {
-                    wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
-                    watchList.add(movie);
-                    reloadWatchlist();
-                }
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                throw new DatabaseException("Unexpected Error while trying to add or remove Movie",e);
+            WatchlistRepository wr = WatchlistRepository.getInstance();
+            if (watchList.contains(movie)) {
+                wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                watchList.remove(movie);
+                reloadWatchlist();
+            } else {
+                wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                watchList.add(movie);
+                reloadWatchlist();
             }
         }
-
     };
 
     // fill watchlist with watchlistmovies
@@ -297,12 +283,40 @@ public class HomeController implements Initializable {
 
     // main method for method testing
     public static void main(String[] args) {
-        HomeController controller = new HomeController();
-        List<Movie> movielist = new ArrayList<>();
-        movielist.addAll(controller.allMovies);
-        System.out.println(countMoviesFrom(movielist,"Peter Jackson"));
-        System.out.println(getLongestMovieTitle(movielist));
-        System.out.println(getMostPopularActor(movielist));
-        System.out.println(getMoviesBetweenYears(movielist,1900,1980));
+        System.out.println(countMoviesFrom(allMovies,"Peter Jackson"));
+        System.out.println(getLongestMovieTitle(allMovies));
+        System.out.println(getMostPopularActor(allMovies));
+        System.out.println(getMoviesBetweenYears(allMovies,1900,1980));
+    }
+
+    // Exercise 4
+    @Override
+    public void watchListUpdate(String type) {
+       if (type.equals("add")) {
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("Watchlist Change!");
+           alert.setHeaderText("MOVIE ADDED");
+           alert.setContentText("Movie has been added to the Watchlist");
+           alert.showAndWait();
+       } else {
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("Watchlist Change!");
+           alert.setHeaderText("MOVIE REMOVED");
+           alert.setContentText("Movie has been removed from the Watchlist");
+           alert.showAndWait();
+       }
     }
 }
+
+// OLD STUFF
+
+/* // sort movies ascending
+    public void sortAscending(ObservableList<Movie> movies) {
+        movies.sort(Comparator.comparing(Movie::getTitle));
+    }
+
+    // sort movies descending
+    public void sortDescending(ObservableList<Movie> movies) {
+        movies.sort(Comparator.comparing(Movie::getTitle).reversed());
+    }
+ */

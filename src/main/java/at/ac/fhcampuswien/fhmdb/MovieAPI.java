@@ -36,9 +36,6 @@ public class MovieAPI {
             URL api = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) api.openConnection();
             connection.setRequestMethod("GET");
-            if (connection.getResponseCode() != 200) {
-                throw new MovieApiException("Code wasn't 200");
-            }
             connection.connect();
 
             InputStream inputStream = connection.getInputStream();
@@ -52,7 +49,7 @@ public class MovieAPI {
         } catch (UnknownHostException e) {
             throw new MovieApiException("Unexpexted Error");
         } catch (Exception e) {
-            throw new MovieApiException("API couldn't connect.");
+            throw new MovieApiException("Couldn't connect to API and therefore couldn't load movies");
         }
 
         return movies;

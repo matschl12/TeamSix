@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Database {
-    public static String DATABASE_URL = "jdbc:h2:file: ./db/watchlist";
+    public static String DATABASE_URL = "jdbc:h2:file: ./db/watchlistdb";
     public static final String DATABASE_USER = "root";
     public static final String DATABASE_PASSWORD = "password";
 
@@ -20,13 +20,13 @@ public class Database {
     private static Database instance;
 
     // Database Constructor
-    private Database() {
+    private Database() throws DatabaseException {
         try {
             createConnectionSource();
             dao = DaoManager.createDao(connectionSource, WatchlistMovieEntity.class);
             createTables();
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't connect to Database", e);
+            throw new DatabaseException("Couldn't connect to Database");
         }
     }
     // database for testing purposes
@@ -34,40 +34,49 @@ public class Database {
         WatchlistMovieEntity entity = new WatchlistMovieEntity("abcde", "Hallo", "Ja", new ArrayList<>(), 5, "test", 6, 8.2);
         dao.create(entity);
     }
-    public static Database getDatabase() {
+    public static Database getDatabase() throws DatabaseException {
         if(instance == null) {
             instance = new Database();
         }
         return instance;
     }
     // create connection source
-    public void createConnectionSource()
+    public void createConnectionSource () throws DatabaseException
     {
-
         try {
             connectionSource = new JdbcConnectionSource(DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD);
-        } catch (SQLException e) {e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't create Connection Source");
         }
     }
 
     // methods not in use
-    public static ConnectionSource getConnectionSource() throws SQLException {
-        if (connectionSource == null) {
-            connectionSource = new JdbcConnectionSource(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+    public static ConnectionSource getConnectionSource() throws DatabaseException {
+        try {
+            if (connectionSource == null) {
+                connectionSource = new JdbcConnectionSource(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+            }
+            return connectionSource;
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't get Connection Source");
         }
-        return connectionSource;
+
     }
 
     // create tables
-    public void createTables() throws SQLException
+    public void createTables() throws DatabaseException
     {
-        TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
+        try {
+            TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't create tables");
+        }
 
     }
 
     // we don't use this method
 
-    public static Dao<WatchlistMovieEntity, Long> getWatchlistMovieDao() throws SQLException {
+    public static Dao<WatchlistMovieEntity, Long> getWatchlistMovieDao() throws SQLException, DatabaseException {
         if (dao == null) {
             dao = DaoManager.createDao(getConnectionSource(), WatchlistMovieEntity.class);
         }
