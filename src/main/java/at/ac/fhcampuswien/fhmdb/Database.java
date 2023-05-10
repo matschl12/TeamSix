@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class Database {
-    public static String DATABASE_URL = "jdbc:h2:file: ./db/watchlist";
+    public static String DATABASE_URL = "jdbc:h2:file: ./db/watchlistdb";
     public static final String DATABASE_USER = "root";
     public static final String DATABASE_PASSWORD = "password";
 

@@ -5,5 +5,5 @@ import at.ac.fhcampuswien.fhmdb.models.Movie;
 import java.util.List;
 
 public interface Observer {
-    void watchListUpdate(List<Movie> movies);
+    void watchListUpdate(String type);
 }

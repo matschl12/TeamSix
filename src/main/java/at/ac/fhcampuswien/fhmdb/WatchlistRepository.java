@@ -1,10 +1,13 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 import at.ac.fhcampuswien.fhmdb.Exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observable;
+import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observer;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -66,6 +69,7 @@ public class WatchlistRepository implements Observable {
                for (WatchlistMovieEntity entity : entityList) {
                    if (Objects.equals(movie.apiId, entity.apiId)) {
                        dao.delete(entity);
+                       instance.notifyObserver("remove");
                    }
                }
            } catch (SQLException  e) {
@@ -90,6 +94,7 @@ public class WatchlistRepository implements Observable {
 
         try {
             dao.create(movie);
+            instance.notifyObserver("add");
         } catch (SQLException e) {
             throw new DatabaseException("Error while adding movie to watchlist in database");
         }
@@ -111,4 +116,15 @@ public class WatchlistRepository implements Observable {
        return null;
     }
 
+    @Override
+    public void addObserver(Observer observer) {
+        List<Observer> observerList = new ArrayList<>();
+        observerList.add(observer);
+    }
+
+    @Override
+    public void notifyObserver(String type) {
+        HomeController hc = new HomeController();
+        hc.watchListUpdate(type);
+    }
 }

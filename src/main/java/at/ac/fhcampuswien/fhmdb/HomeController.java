@@ -289,10 +289,22 @@ public class HomeController implements Initializable, Observer {
         System.out.println(getMoviesBetweenYears(allMovies,1900,1980));
     }
 
-    // Exercise 4 ( not done )
+    // Exercise 4
     @Override
-    public void watchListUpdate(List<Movie> movies) {
-
+    public void watchListUpdate(String type) {
+       if (type.equals("add")) {
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("Watchlist Change!");
+           alert.setHeaderText("MOVIE ADDED");
+           alert.setContentText("Movie has been added to the Watchlist");
+           alert.showAndWait();
+       } else {
+           Alert alert = new Alert(Alert.AlertType.INFORMATION);
+           alert.setTitle("Watchlist Change!");
+           alert.setHeaderText("MOVIE REMOVED");
+           alert.setContentText("Movie has been removed from the Watchlist");
+           alert.showAndWait();
+       }
     }
 }
 
