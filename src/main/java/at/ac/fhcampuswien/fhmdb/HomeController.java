@@ -1,7 +1,11 @@
 package at.ac.fhcampuswien.fhmdb;
 
+import at.ac.fhcampuswien.fhmdb.Exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortASCENDING;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortDESCENDING;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -10,7 +14,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.sql.SQLException;
@@ -139,17 +142,22 @@ public class HomeController implements Initializable {
             resetFilter();
         }); */
 
-
         // Sort button example:
         sortBtn.setOnAction(actionEvent -> {
+            MovieSortStates sortState = new MovieSortStates();
             if(sortBtn.getText().equals("Sort (asc)")) {
                 // TODO sort observableMovies ascending
-                sortAscending(observableMovies);
+                // sortAscending(observableMovies);
+                sortState.setState(new SortASCENDING());
+                sortState.sortMovies(observableMovies);
+                System.out.println(sortState);
 
                 sortBtn.setText("Sort (desc)");
             } else {
                 // TODO sort observableMovies descending
-                sortDescending(observableMovies);
+                // sortDescending(observableMovies);
+                sortState.setState(new SortDESCENDING());
+                sortState.sortMovies(observableMovies);
                 sortBtn.setText("Sort (asc)");
             }
         });

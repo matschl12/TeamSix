@@ -1,4 +1,4 @@
-package at.ac.fhcampuswien.fhmdb;
+package at.ac.fhcampuswien.fhmdb.Exceptions;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import javafx.scene.control.Alert;

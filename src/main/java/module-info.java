@@ -11,4 +11,6 @@ module at.ac.fhcampuswien.fhmdb {
     opens at.ac.fhcampuswien.fhmdb to javafx.fxml, ormlite.core;
     opens at.ac.fhcampuswien.fhmdb.models to com.fasterxml.jackson.databind;
     exports at.ac.fhcampuswien.fhmdb;
+    exports at.ac.fhcampuswien.fhmdb.Exceptions;
+    opens at.ac.fhcampuswien.fhmdb.Exceptions to javafx.fxml, ormlite.core;
 }
