@@ -4,6 +4,7 @@ import at.ac.fhcampuswien.fhmdb.Exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.Exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortASCENDING;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortDESCENDING;
@@ -22,7 +23,7 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class HomeController implements Initializable {
+public class HomeController implements Initializable, Observer {
     @FXML
     public JFXButton searchBtn;
 
@@ -286,6 +287,12 @@ public class HomeController implements Initializable {
         System.out.println(getLongestMovieTitle(allMovies));
         System.out.println(getMostPopularActor(allMovies));
         System.out.println(getMoviesBetweenYears(allMovies,1900,1980));
+    }
+
+    // Exercise 4 ( not done )
+    @Override
+    public void watchListUpdate(List<Movie> movies) {
+
     }
 }
 

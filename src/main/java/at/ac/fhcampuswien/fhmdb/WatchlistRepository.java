@@ -4,6 +4,7 @@ import java.util.List;
 
 import at.ac.fhcampuswien.fhmdb.Exceptions.DatabaseException;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
+import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
@@ -15,7 +16,7 @@ import java.util.Objects;
 
 
 
-public class WatchlistRepository {
+public class WatchlistRepository implements Observable {
 
     // Exercise 4 SINGLETON Pattern
     private static WatchlistRepository instance;
@@ -55,7 +56,9 @@ public class WatchlistRepository {
         }
     }
 
+
     // remove movie from database
+    @Override
     public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException {
 
            try {
@@ -82,6 +85,7 @@ public class WatchlistRepository {
     }
 
     // add movie to database
+    @Override
     public void addMovie(WatchlistMovieEntity movie) throws DatabaseException {
 
         try {

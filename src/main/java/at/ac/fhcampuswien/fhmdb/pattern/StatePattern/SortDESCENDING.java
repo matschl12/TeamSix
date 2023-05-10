@@ -3,6 +3,7 @@ package at.ac.fhcampuswien.fhmdb.pattern.StatePattern;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import javafx.collections.ObservableList;
 
+
 import java.util.Comparator;
 
 public class SortDESCENDING implements State {
