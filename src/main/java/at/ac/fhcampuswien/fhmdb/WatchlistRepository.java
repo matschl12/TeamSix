@@ -15,6 +15,17 @@ import java.util.Objects;
 
 
 public class WatchlistRepository {
+
+    // Exercise 4 SINGLETON Pattern
+    private static WatchlistRepository instance = new WatchlistRepository();
+    private WatchlistRepository() {
+
+    }
+    public static WatchlistRepository getInstance() {
+        return instance;
+    }
+
+    // Exercise 3
     Dao <WatchlistMovieEntity, Long> dao = initializeDao();
 
     public static ConnectionSource createConnectionSource() throws SQLException

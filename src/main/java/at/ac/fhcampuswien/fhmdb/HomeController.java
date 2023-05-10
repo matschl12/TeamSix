@@ -66,7 +66,7 @@ public class HomeController implements Initializable {
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
         // add watchlist movies from database to watchlist
         try {
-            WatchlistRepository wr = new WatchlistRepository();
+            WatchlistRepository wr = WatchlistRepository.getInstance();
             watchList.addAll(fillWatchlist(wr.getAllMovies()));
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -131,18 +131,9 @@ public class HomeController implements Initializable {
 
                     observableMovies.clear();
                     observableMovies.addAll(MovieAPI.fetchMovies(searchFieldString,genreString,releaseYearInt,ratingDouble));
-
-
                 });
 
-        /* searchField.onKeyReleasedProperty().addListener(observable -> {
-            observableMovies.clear();
-            observableMovies.addAll(fetchMoviesFilter("","","",""));
-            initializeHomeController();
-            resetFilter();
-        }); */
-
-        // Sort button example:
+        // Sort button example: changed due to Exercise 4
         sortBtn.setOnAction(actionEvent -> {
             MovieSortStates sortState = new MovieSortStates();
             if(sortBtn.getText().equals("Sort (asc)")) {
@@ -150,8 +141,6 @@ public class HomeController implements Initializable {
                 // sortAscending(observableMovies);
                 sortState.setState(new SortASCENDING());
                 sortState.sortMovies(observableMovies);
-                System.out.println(sortState);
-
                 sortBtn.setText("Sort (desc)");
             } else {
                 // TODO sort observableMovies descending
@@ -175,16 +164,6 @@ public class HomeController implements Initializable {
         observableMovies.addAll(allMovies);
     }
 
-    // sort movies ascending
-    public void sortAscending(ObservableList<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle));
-    }
-
-    // sort movies descending
-    public void sortDescending(ObservableList<Movie> movies) {
-        movies.sort(Comparator.comparing(Movie::getTitle).reversed());
-    }
-
     // reset button method
     public void resetFilter() {
         genreComboBox.setPromptText("Filter by Genre");
@@ -195,6 +174,8 @@ public class HomeController implements Initializable {
         ratingComboBox.setValue(null);
         searchField.setText("");
     }
+
+    // Exercise 2
 
     // getMostPopularActor method
 
@@ -207,7 +188,6 @@ public class HomeController implements Initializable {
                 .map(Map.Entry::getKey)
                 .orElse("");
     }
-
 
     // longest Movie title - method
     public static int getLongestMovieTitle(List<Movie> movies) {
@@ -237,7 +217,7 @@ public class HomeController implements Initializable {
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
-            WatchlistRepository wr = new WatchlistRepository();
+            WatchlistRepository wr = WatchlistRepository.getInstance();
             try {
                 if(watchList.contains(movie)){
                     wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
@@ -297,12 +277,22 @@ public class HomeController implements Initializable {
 
     // main method for method testing
     public static void main(String[] args) {
-        HomeController controller = new HomeController();
-        List<Movie> movielist = new ArrayList<>();
-        movielist.addAll(controller.allMovies);
-        System.out.println(countMoviesFrom(movielist,"Peter Jackson"));
-        System.out.println(getLongestMovieTitle(movielist));
-        System.out.println(getMostPopularActor(movielist));
-        System.out.println(getMoviesBetweenYears(movielist,1900,1980));
+        System.out.println(countMoviesFrom(allMovies,"Peter Jackson"));
+        System.out.println(getLongestMovieTitle(allMovies));
+        System.out.println(getMostPopularActor(allMovies));
+        System.out.println(getMoviesBetweenYears(allMovies,1900,1980));
     }
 }
+
+// OLD STUFF
+
+/* // sort movies ascending
+    public void sortAscending(ObservableList<Movie> movies) {
+        movies.sort(Comparator.comparing(Movie::getTitle));
+    }
+
+    // sort movies descending
+    public void sortDescending(ObservableList<Movie> movies) {
+        movies.sort(Comparator.comparing(Movie::getTitle).reversed());
+    }
+ */
