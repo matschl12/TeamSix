@@ -41,27 +41,36 @@ public class Database {
         return instance;
     }
     // create connection source
-    public void createConnectionSource()
+    public void createConnectionSource () throws DatabaseException
     {
-
         try {
             connectionSource = new JdbcConnectionSource(DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD);
-        } catch (SQLException e) {e.printStackTrace();
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't create Connection Source", e);
         }
     }
 
     // methods not in use
-    public static ConnectionSource getConnectionSource() throws SQLException {
-        if (connectionSource == null) {
-            connectionSource = new JdbcConnectionSource(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+    public static ConnectionSource getConnectionSource() throws DatabaseException {
+        try {
+            if (connectionSource == null) {
+                connectionSource = new JdbcConnectionSource(DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD);
+            }
+            return connectionSource;
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't get Connection Source", e);
         }
-        return connectionSource;
+
     }
 
     // create tables
-    public void createTables() throws SQLException
+    public void createTables() throws DatabaseException
     {
-        TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
+        try {
+            TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
+        } catch (SQLException e) {
+            throw new DatabaseException("Couldn't create tables", e);
+        }
 
     }
 

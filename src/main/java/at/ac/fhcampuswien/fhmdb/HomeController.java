@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.fhmdb;
 
 import at.ac.fhcampuswien.fhmdb.Exceptions.DatabaseException;
+import at.ac.fhcampuswien.fhmdb.Exceptions.MovieApiException;
 import at.ac.fhcampuswien.fhmdb.models.Genre;
 import at.ac.fhcampuswien.fhmdb.models.Movie;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
@@ -56,20 +57,26 @@ public class HomeController implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle) throws DatabaseException{
         Database.getDatabase();
-        allMovies = Movie.initializeMovies();
+        try {
+            allMovies = Movie.initializeMovies();
+        } catch (MovieApiException e) {
+            System.out.println("MovieApiException");
+        }
         observableMovies.addAll(allMovies);         // add dummy data to observable list
 
         // initialize UI stuff
-        movieListView.setItems(observableMovies);   // set data of observable list to list view
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
+        movieListView.setItems(observableMovies);   // set data of observable list to list view
+
+
         // add watchlist movies from database to watchlist
         try {
             WatchlistRepository wr = WatchlistRepository.getInstance();
             watchList.addAll(fillWatchlist(wr.getAllMovies()));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        } catch (DatabaseException e) {
+            System.out.println("Database Exception");
         }
 
         // TODO add genre filter items with genreComboBox.getItems().addAll(...)
@@ -214,27 +221,20 @@ public class HomeController implements Initializable {
 
     // Exercise 3 Business Layer
     // onAddToWatchlistButton clicked event
-    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem) -> {
+    private final ClickEventHandler onAddToWatchlistClicked = (clickedItem)  -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
             WatchlistRepository wr = WatchlistRepository.getInstance();
-            try {
-                if(watchList.contains(movie)){
-                    wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
-                    watchList.remove(movie);
-                    reloadWatchlist();
-                } else {
-                    wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
-                    watchList.add(movie);
-                    reloadWatchlist();
-                }
-            } catch (DatabaseException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                throw new DatabaseException("Unexpected Error while trying to add or remove Movie",e);
+            if (watchList.contains(movie)) {
+                wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                watchList.remove(movie);
+                reloadWatchlist();
+            } else {
+                wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
+                watchList.add(movie);
+                reloadWatchlist();
             }
         }
-
     };
 
     // fill watchlist with watchlistmovies

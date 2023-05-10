@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.DaoManager;
 import com.j256.ormlite.jdbc.JdbcConnectionSource;
 import com.j256.ormlite.support.ConnectionSource;
 
+
 import java.sql.SQLException;
 import java.util.Objects;
 
@@ -28,35 +29,47 @@ public class WatchlistRepository {
     // Exercise 3
     Dao <WatchlistMovieEntity, Long> dao = initializeDao();
 
-    public static ConnectionSource createConnectionSource() throws SQLException
+    public static ConnectionSource createConnectionSource() throws DatabaseException
     {
-        return new JdbcConnectionSource(Database.DATABASE_URL,Database.DATABASE_USER,Database.DATABASE_PASSWORD);
+        try {
+            return new JdbcConnectionSource(Database.DATABASE_URL,Database.DATABASE_USER,Database.DATABASE_PASSWORD);
+        }  catch (SQLException e) {
+            throw new DatabaseException("Couldnt create Connection Source", e);
+        }
     }
 
-   private static Dao<WatchlistMovieEntity, Long> initializeDao() {
+   private static Dao<WatchlistMovieEntity, Long> initializeDao() throws DatabaseException {
         try {
             return DaoManager.createDao(createConnectionSource(), WatchlistMovieEntity.class);
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new DatabaseException("Couldnt initialize Dao", e );
         }
-
-        return null;
     }
 
     // remove movie from database
-    public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException, SQLException {
+    public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException {
 
-            List<WatchlistMovieEntity> entityList = getAllMovies();
-            for (WatchlistMovieEntity entity : entityList) {
-                if (Objects.equals(movie.apiId, entity.apiId)) {
-                    dao.delete(entity);
-                }
-            }
+           try {
+               List<WatchlistMovieEntity> entityList = getAllMovies();
+               for (WatchlistMovieEntity entity : entityList) {
+                   if (Objects.equals(movie.apiId, entity.apiId)) {
+                       dao.delete(entity);
+                   }
+               }
+           } catch (SQLException  e) {
+               throw new DatabaseException("Remove Movie Failure", e);
+           }
+
     }
 
     // get all movies from database
-    public List<WatchlistMovieEntity> getAllMovies() throws SQLException{
-        return dao.queryForAll();
+    public List<WatchlistMovieEntity> getAllMovies() throws DatabaseException{
+
+        try {
+            return dao.queryForAll();
+        } catch (SQLException e) {
+            throw new DatabaseException("getAllMovies doesnt work", e);
+        }
     }
 
     // add movie to database
