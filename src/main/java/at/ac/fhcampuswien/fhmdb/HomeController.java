@@ -15,6 +15,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.sql.SQLException;
@@ -57,12 +58,16 @@ public class HomeController implements Initializable {
 
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) throws DatabaseException{
-        Database.getDatabase();
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            Database.getDatabase();
+        } catch (DatabaseException e) {
+            System.out.println();
+        }
         try {
             allMovies = Movie.initializeMovies();
         } catch (MovieApiException e) {
-            System.out.println("MovieApiException");
+            System.out.println();
         }
         observableMovies.addAll(allMovies);         // add dummy data to observable list
 

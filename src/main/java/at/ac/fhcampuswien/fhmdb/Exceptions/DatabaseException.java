@@ -4,9 +4,9 @@ import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 
-public class DatabaseException extends RuntimeException {
+public class DatabaseException extends Exception {
 
-    public DatabaseException(String message, SQLException e) {
+    public DatabaseException(String message) {
         super(message);
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("An exception occurred");

@@ -20,13 +20,13 @@ public class Database {
     private static Database instance;
 
     // Database Constructor
-    private Database() {
+    private Database() throws DatabaseException {
         try {
             createConnectionSource();
             dao = DaoManager.createDao(connectionSource, WatchlistMovieEntity.class);
             createTables();
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't connect to Database", e);
+            throw new DatabaseException("Couldn't connect to Database");
         }
     }
     // database for testing purposes
@@ -34,7 +34,7 @@ public class Database {
         WatchlistMovieEntity entity = new WatchlistMovieEntity("abcde", "Hallo", "Ja", new ArrayList<>(), 5, "test", 6, 8.2);
         dao.create(entity);
     }
-    public static Database getDatabase() {
+    public static Database getDatabase() throws DatabaseException {
         if(instance == null) {
             instance = new Database();
         }
@@ -46,7 +46,7 @@ public class Database {
         try {
             connectionSource = new JdbcConnectionSource(DATABASE_URL,DATABASE_USER,DATABASE_PASSWORD);
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't create Connection Source", e);
+            throw new DatabaseException("Couldn't create Connection Source");
         }
     }
 
@@ -58,7 +58,7 @@ public class Database {
             }
             return connectionSource;
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't get Connection Source", e);
+            throw new DatabaseException("Couldn't get Connection Source");
         }
 
     }
@@ -69,14 +69,14 @@ public class Database {
         try {
             TableUtils.createTableIfNotExists(connectionSource, WatchlistMovieEntity.class);
         } catch (SQLException e) {
-            throw new DatabaseException("Couldn't create tables", e);
+            throw new DatabaseException("Couldn't create tables");
         }
 
     }
 
     // we don't use this method
 
-    public static Dao<WatchlistMovieEntity, Long> getWatchlistMovieDao() throws SQLException {
+    public static Dao<WatchlistMovieEntity, Long> getWatchlistMovieDao() throws SQLException, DatabaseException {
         if (dao == null) {
             dao = DaoManager.createDao(getConnectionSource(), WatchlistMovieEntity.class);
         }

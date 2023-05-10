@@ -18,8 +18,17 @@ import java.util.Objects;
 public class WatchlistRepository {
 
     // Exercise 4 SINGLETON Pattern
-    private static WatchlistRepository instance = new WatchlistRepository();
-    private WatchlistRepository() {
+    private static WatchlistRepository instance;
+
+    static {
+        try {
+            instance = new WatchlistRepository();
+        } catch (DatabaseException e) {
+            System.out.println();
+        }
+    }
+
+    private WatchlistRepository() throws DatabaseException {
 
     }
     public static WatchlistRepository getInstance() {
@@ -34,7 +43,7 @@ public class WatchlistRepository {
         try {
             return new JdbcConnectionSource(Database.DATABASE_URL,Database.DATABASE_USER,Database.DATABASE_PASSWORD);
         }  catch (SQLException e) {
-            throw new DatabaseException("Couldnt create Connection Source", e);
+            throw new DatabaseException("Couldnt create Connection Source");
         }
     }
 
@@ -42,7 +51,7 @@ public class WatchlistRepository {
         try {
             return DaoManager.createDao(createConnectionSource(), WatchlistMovieEntity.class);
         } catch (SQLException e) {
-            throw new DatabaseException("Couldnt initialize Dao", e );
+            throw new DatabaseException("Couldnt initialize Dao");
         }
     }
 
@@ -57,7 +66,7 @@ public class WatchlistRepository {
                    }
                }
            } catch (SQLException  e) {
-               throw new DatabaseException("Remove Movie Failure", e);
+               throw new DatabaseException("Remove Movie Failure");
            }
 
     }
@@ -68,7 +77,7 @@ public class WatchlistRepository {
         try {
             return dao.queryForAll();
         } catch (SQLException e) {
-            throw new DatabaseException("getAllMovies doesnt work", e);
+            throw new DatabaseException("getAllMovies doesnt work");
         }
     }
 
@@ -78,7 +87,7 @@ public class WatchlistRepository {
         try {
             dao.create(movie);
         } catch (SQLException e) {
-            throw new DatabaseException("Error while adding movie to watchlist in database", e);
+            throw new DatabaseException("Error while adding movie to watchlist in database");
         }
     }
 
