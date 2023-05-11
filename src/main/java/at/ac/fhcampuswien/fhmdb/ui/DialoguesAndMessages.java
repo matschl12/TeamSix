@@ -1,29 +1,32 @@
 package at.ac.fhcampuswien.fhmdb.ui;
 
+import at.ac.fhcampuswien.fhmdb.HomeController;
 import javafx.scene.control.Alert;
 
 
 public class DialoguesAndMessages {
 
 
-    public DialoguesAndMessages(String titleText, String headerText, String contextMessage)   {
 
-    /*this constructor takes 3 strings to display any simple pop-up message in the UI:
-    1 title
-    2 header
-    3 context=the message itself
-     */
+    public static void alertBox(String titleText, String headerText, String contextMessage)   {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(titleText);
         alert.setHeaderText(headerText);
         alert.setContentText(contextMessage);
 
-        alert.showAndWait();
+        alert.showAndWait();}
 
-    }
+    public static void infoBox(String titleText, String headerText, String contextMessage)   {
 
-    public String UIdialogue(String question) {
+     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(titleText);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contextMessage);
+
+        alert.showAndWait();}
+
+    public static String UIdialogue(String question) {
     
 
         return "okay";
@@ -51,6 +54,16 @@ public class DialoguesAndMessages {
 
          */
     }
+
+    public void setTextTo_myCustomMessageField(String text) {
+        HomeController.myCustomMessageField.setText("Tri my custom text");
+    }
+
+    public void appendTextTo_myCustomMessageField(String text) {
+        HomeController.myCustomMessageField.appendText("Tri my custom text");
+    }
+
+
 
 
 }

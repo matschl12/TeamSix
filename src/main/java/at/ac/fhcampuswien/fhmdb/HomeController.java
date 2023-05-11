@@ -8,6 +8,7 @@ import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortASCENDING;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortDESCENDING;
+import at.ac.fhcampuswien.fhmdb.ui.DialoguesAndMessages;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -16,14 +17,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -85,9 +84,11 @@ public class HomeController implements Initializable, Observer {
         try {
             TextArea myCustomMessagesTextArea = new TextArea();
             VBox myCustomMessagesVBox = new VBox(myCustomMessagesTextArea);
-            myCustomMessagesTextArea.setText(" ");
+            myCustomMessagesTextArea.setText(" Notice the TextArea ");
         } catch (RuntimeException r){
             System.out.println("VBox not working");
+        } finally{
+            System.out.println("myCustomMessagesTextArea");
         }
 
 
@@ -312,6 +313,7 @@ public class HomeController implements Initializable, Observer {
     @Override
     public void watchListUpdate(String type) {
        if (type.equals("add")) {
+           //DialoguesAndMessages.infoBox("1","2","3");
            Alert alert = new Alert(Alert.AlertType.INFORMATION);
            alert.setTitle("Watchlist Change!");
            alert.setHeaderText("MOVIE ADDED");

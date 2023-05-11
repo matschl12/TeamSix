@@ -1,22 +1,35 @@
 package at.ac.fhcampuswien.fhmdb.Exceptions;
 
-import at.ac.fhcampuswien.fhmdb.HomeController;
-import at.ac.fhcampuswien.fhmdb.ui.CustomMessages;
+
 import at.ac.fhcampuswien.fhmdb.ui.DialoguesAndMessages;
 
+import java.sql.SQLException;
 
 public class AllExceptionsHandler extends RuntimeException  {
 
 //this will catch and handle all exceptions also beyond the 2 custom exception classes
 
+    public AllExceptionsHandler(String message, SQLException e){
+        super(message);
+        DialoguesAndMessages.alertBox("An exception occurred","A built-in exception occurred", message);
+
+    }
+
     public AllExceptionsHandler(String headerText, String contextMessage) {
         super(contextMessage);
 
-    //here is our alert box:
-        DialoguesAndMessages popUp=new DialoguesAndMessages("An exception occurred", headerText, contextMessage);
+//here is our alert box:
+        DialoguesAndMessages.alertBox("An exception occurred",headerText, contextMessage);
 
-
+//here is our UI textarea:
         //HomeController.myCustomMessageField.setText(contextMessage);
+//here is just console
+        System.out.println(contextMessage);
+
+    }
+    public AllExceptionsHandler(String message){
+        super(message);
+        DialoguesAndMessages.alertBox("An exception occurred","A built-in exception occurred", message);
 
     }
 
