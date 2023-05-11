@@ -82,9 +82,13 @@ public class HomeController implements Initializable, Observer {
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
         movieListView.setItems(observableMovies);   // set data of observable list to list view
 
-        TextArea myCustomMessagesTextArea = null;
-//        VBox myCustomMessagesVBox = new VBox(TextArea myCustomMessagesTextArea);
-        myCustomMessagesTextArea.setText(" ");
+        try {
+            TextArea myCustomMessagesTextArea = new TextArea();
+            VBox myCustomMessagesVBox = new VBox(myCustomMessagesTextArea);
+            myCustomMessagesTextArea.setText(" ");
+        } catch (RuntimeException r){
+            System.out.println("VBox not working");
+        }
 
 
 

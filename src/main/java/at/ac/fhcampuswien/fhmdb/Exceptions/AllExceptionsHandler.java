@@ -1,5 +1,7 @@
 package at.ac.fhcampuswien.fhmdb.Exceptions;
 
+import at.ac.fhcampuswien.fhmdb.HomeController;
+import at.ac.fhcampuswien.fhmdb.ui.CustomMessages;
 import at.ac.fhcampuswien.fhmdb.ui.DialoguesAndMessages;
 
 
@@ -9,7 +11,13 @@ public class AllExceptionsHandler extends RuntimeException  {
 
     public AllExceptionsHandler(String headerText, String contextMessage) {
         super(contextMessage);
+
+    //here is our alert box:
         DialoguesAndMessages popUp=new DialoguesAndMessages("An exception occurred", headerText, contextMessage);
+
+
+        //HomeController.myCustomMessageField.setText(contextMessage);
+
     }
 
 
@@ -20,7 +28,7 @@ public class AllExceptionsHandler extends RuntimeException  {
     public static void forAnyOtherExceptions(){
 
 
-
+/*
     Thread thread = new Thread(() -> {
         try {
             // whatever
@@ -40,7 +48,7 @@ public class AllExceptionsHandler extends RuntimeException  {
         stage.setScene(scene);
         stage.show();
 
-
+*/
     }}
 
 
