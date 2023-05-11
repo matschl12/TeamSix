@@ -3,18 +3,12 @@ package at.ac.fhcampuswien.fhmdb.Exceptions;
 
 import at.ac.fhcampuswien.fhmdb.ui.DialoguesAndMessages;
 
-import static java.lang.System.*;
 
 public class AllExceptionsHandler extends RuntimeException  {
 
 //this will catch and handle all exceptions also beyond the 2 custom exception classes
 
 
-    public AllExceptionsHandler(String message){
-        super(message);
-        DialoguesAndMessages.alertBox("An exception occurred","A built-in exception occurred", message);
-
-    }
 
     public AllExceptionsHandler(String headerText, String contextMessage) {
         super(contextMessage);
