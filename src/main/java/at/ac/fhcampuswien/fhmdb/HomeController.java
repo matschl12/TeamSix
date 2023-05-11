@@ -81,7 +81,8 @@ public class HomeController implements Initializable, Observer {
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
         movieListView.setItems(observableMovies);   // set data of observable list to list view
 
-        try {
+        // for now i put it into a comment because it is not finished yet
+        /* try {
             TextArea myCustomMessagesTextArea = new TextArea();
             VBox myCustomMessagesVBox = new VBox(myCustomMessagesTextArea);
             myCustomMessagesTextArea.setText(" Notice the TextArea ");
@@ -89,9 +90,7 @@ public class HomeController implements Initializable, Observer {
             System.out.println("VBox not working");
         } finally{
             System.out.println("myCustomMessagesTextArea");
-        }
-
-
+        } */
 
 
         // add watchlist movies from database to watchlist
@@ -288,14 +287,14 @@ public class HomeController implements Initializable, Observer {
         if(switchSceneBtn.getText().equals("Switch to Watchlist"))
         {
             observableMovies.clear();
-            System.out.println(watchList);
+            // System.out.println(watchList);
             observableMovies.addAll(watchList); //show all movies from the watchlist
             switchSceneBtn.setText("Switch to Homepage");
         }
         else
         {
             observableMovies.clear();
-            System.out.println(watchList);
+            // System.out.println(watchList);
             observableMovies.addAll(allMovies); //show all movies
             switchSceneBtn.setText("Switch to Watchlist");
         }

@@ -6,20 +6,13 @@ import at.ac.fhcampuswien.fhmdb.ui.DialoguesAndMessages;
 
 public class AllExceptionsHandler extends RuntimeException  {
 
-//this will catch and handle all exceptions also beyond the 2 custom exception classes
-
-
-
+    //this will catch and handle all exceptions also beyond the 2 custom exception classes
     public AllExceptionsHandler(String headerText, String contextMessage) {
         super(contextMessage);
-
-//here is our alert box:
+        //here is our alert box:
         DialoguesAndMessages.alertBox("An exception occurred",headerText, contextMessage);
-
-//HomeController.myCustomMessageField.setText(contextMessage);
-
+        //HomeController.myCustomMessageField.setText(contextMessage);
         System.out.print("contextMessage");
-
     }
 
     /*

@@ -6,8 +6,6 @@ import javafx.scene.control.Alert;
 
 public class DialoguesAndMessages {
 
-
-
     public static void alertBox(String titleText, String headerText, String contextMessage)   {
 
         Alert alert = new Alert(Alert.AlertType.ERROR);
