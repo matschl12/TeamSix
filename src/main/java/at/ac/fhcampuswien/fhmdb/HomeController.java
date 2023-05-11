@@ -16,8 +16,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.*;
@@ -29,6 +33,8 @@ public class HomeController implements Initializable, Observer {
 
     @FXML
     public TextField searchField;
+    @FXML
+    public static TextArea myCustomMessageField;
 
     @FXML
     public JFXListView movieListView;
@@ -75,6 +81,12 @@ public class HomeController implements Initializable, Observer {
         // initialize UI stuff
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
         movieListView.setItems(observableMovies);   // set data of observable list to list view
+
+        TextArea myCustomMessagesTextArea = null;
+//        VBox myCustomMessagesVBox = new VBox(TextArea myCustomMessagesTextArea);
+        myCustomMessagesTextArea.setText(" ");
+
+
 
 
         // add watchlist movies from database to watchlist
@@ -176,6 +188,9 @@ public class HomeController implements Initializable, Observer {
         observableMovies.clear();
         observableMovies.addAll(allMovies);
     }
+
+
+
 
     // reset button method
     public void resetFilter() {

@@ -1,13 +1,14 @@
 package at.ac.fhcampuswien.fhmdb.Exceptions;
 
-import javafx.scene.control.Alert;
-
 import java.sql.SQLException;
 
-public class DatabaseException extends ThrowExceptionsHere {
+public class DatabaseException extends AllExceptionsHandler {
 
+    public DatabaseException(String message) {
+        super("DatabaseException" , message);//shall be received by AllExceptionsHandler
+    }
     public DatabaseException(String message, SQLException e) {
-        super("DatabaseException" , message);//shall be received by ThrowExceptionsHere
+        super("DatabaseException" , message);//shall be received by AllExceptionsHandler
 /*
         super(message);
         Alert alert = new Alert(Alert.AlertType.ERROR);
