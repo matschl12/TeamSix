@@ -61,10 +61,13 @@ public class HomeController implements Initializable, Observer {
 
     public static List<Movie> watchList = new ArrayList<>();
 
+    private WatchlistRepository wr = WatchlistRepository.getInstance();
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        wr.addObserver(this);
         try {
             Database.getDatabase();
         } catch (DatabaseException e) {
@@ -95,7 +98,6 @@ public class HomeController implements Initializable, Observer {
 
         // add watchlist movies from database to watchlist
         try {
-            WatchlistRepository wr = WatchlistRepository.getInstance();
             watchList.addAll(fillWatchlist(wr.getAllMovies()));
         } catch (DatabaseException e) {
             System.out.println("Database Exception");
@@ -194,8 +196,6 @@ public class HomeController implements Initializable, Observer {
     }
 
 
-
-
     // reset button method
     public void resetFilter() {
         genreComboBox.setPromptText("Filter by Genre");
@@ -249,14 +249,13 @@ public class HomeController implements Initializable, Observer {
     private final ClickEventHandler onAddToWatchlistClicked = (clickedItem)  -> {
         if (clickedItem instanceof Movie) {
             Movie movie = (Movie) clickedItem;
-            WatchlistRepository wr = WatchlistRepository.getInstance();
             if (watchList.contains(movie)) {
-                wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                 watchList.remove(movie);
+                wr.removeMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                 reloadWatchlist();
             } else {
-                wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                 watchList.add(movie);
+                wr.addMovie(WatchlistRepository.changeMovieToWatchlistMovie(movie));
                 reloadWatchlist();
             }
         }
@@ -310,21 +309,14 @@ public class HomeController implements Initializable, Observer {
 
     // Exercise 4
     @Override
-    public void watchListUpdate(String type) {
-       if (type.equals("add")) {
-           //DialoguesAndMessages.infoBox("1","2","3");
-           Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setTitle("Watchlist Change!");
-           alert.setHeaderText("MOVIE ADDED");
-           alert.setContentText("Movie has been added to the Watchlist");
-           alert.showAndWait();
-       } else {
-           Alert alert = new Alert(Alert.AlertType.INFORMATION);
-           alert.setTitle("Watchlist Change!");
-           alert.setHeaderText("MOVIE REMOVED");
-           alert.setContentText("Movie has been removed from the Watchlist");
-           alert.showAndWait();
-       }
+    public void watchListUpdate(String msg) {
+
+       Alert alert = new Alert(Alert.AlertType.INFORMATION);
+       alert.setTitle("WATCHLIST");
+       alert.setHeaderText("UPDATE");
+       alert.setContentText(msg);
+       alert.showAndWait();
+
     }
 }
 

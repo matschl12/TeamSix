@@ -24,6 +24,8 @@ public class WatchlistRepository implements Observable {
     // Exercise 4 SINGLETON Pattern
     private static WatchlistRepository instance;
 
+    private List<Observer> observers = new ArrayList<>();
+
     static {
         try {
             instance = new WatchlistRepository();
@@ -60,23 +62,6 @@ public class WatchlistRepository implements Observable {
     }
 
 
-    // remove movie from database
-    @Override
-    public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException {
-
-           try {
-               List<WatchlistMovieEntity> entityList = getAllMovies();
-               for (WatchlistMovieEntity entity : entityList) {
-                   if (Objects.equals(movie.apiId, entity.apiId)) {
-                       dao.delete(entity);
-                       instance.notifyObserver("remove");
-                   }
-               }
-           } catch (SQLException  e) {
-               throw new DatabaseException("Remove Movie Failure");
-           }
-
-    }
 
     // get all movies from database
     public List<WatchlistMovieEntity> getAllMovies() throws DatabaseException{
@@ -88,13 +73,30 @@ public class WatchlistRepository implements Observable {
         }
     }
 
+    // remove movie from database
+    public void removeMovie(WatchlistMovieEntity movie) throws DatabaseException {
+
+        try {
+            List<WatchlistMovieEntity> entityList = getAllMovies();
+            for (WatchlistMovieEntity entity : entityList) {
+                if (Objects.equals(movie.apiId, entity.apiId)) {
+                    dao.delete(entity);
+                    notifyObserver(movie.title + "was removed from the Watchlist.");
+                }
+            }
+        } catch (SQLException  e) {
+            throw new DatabaseException("Remove Movie Failure");
+        }
+
+    }
+
     // add movie to database
-    @Override
     public void addMovie(WatchlistMovieEntity movie) throws DatabaseException {
 
         try {
             dao.create(movie);
-            instance.notifyObserver("add");
+            notifyObserver("Added " + movie.title + " to Watchlist.");
+            // notifyObserver("The Movie: " + movie.title + " is already in the Watchlist.");
         } catch (SQLException e) {
             throw new DatabaseException("Error while adding movie to watchlist in database");
         }
@@ -118,13 +120,18 @@ public class WatchlistRepository implements Observable {
 
     @Override
     public void addObserver(Observer observer) {
-        List<Observer> observerList = new ArrayList<>();
-        observerList.add(observer);
+        observers.add(observer);
     }
 
     @Override
-    public void notifyObserver(String type) {
-        HomeController hc = new HomeController();
-        hc.watchListUpdate(type);
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver(String msg) {
+        for(Observer observer: observers) {
+            observer.watchListUpdate(msg);
+        }
     }
 }

@@ -24,8 +24,7 @@ public class FhmdbApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        HomeController hc = new HomeController();
-        WatchlistRepository.getInstance().addObserver(hc);
+
     }
 
     public static void main(String[] args) {
