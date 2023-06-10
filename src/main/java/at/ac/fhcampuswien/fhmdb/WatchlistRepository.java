@@ -81,7 +81,7 @@ public class WatchlistRepository implements Observable {
             for (WatchlistMovieEntity entity : entityList) {
                 if (Objects.equals(movie.apiId, entity.apiId)) {
                     dao.delete(entity);
-                    notifyObserver(movie.title + "was removed from the Watchlist.");
+                    notifyObserver(movie.title + " was removed from the Watchlist.");
                 }
             }
         } catch (SQLException  e) {
