@@ -26,6 +26,7 @@ public class WatchlistRepository implements Observable {
 
     private List<Observer> observers = new ArrayList<>();
 
+
     static {
         try {
             instance = new WatchlistRepository();
