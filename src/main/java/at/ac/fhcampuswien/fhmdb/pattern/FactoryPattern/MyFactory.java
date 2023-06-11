@@ -4,8 +4,18 @@ import at.ac.fhcampuswien.fhmdb.HomeController;
 import javafx.util.Callback;
 
 public class MyFactory implements Callback<Class<?>, Object> {
-    //make it a singleton
+    //singleton stuff
+    private static MyFactory instance;
 
+    private MyFactory()
+    {
+
+    }
+
+    public static MyFactory getInstance()
+    {
+        return instance;
+    }
     @Override
     public Object call (Class<?> aClass)
     {
