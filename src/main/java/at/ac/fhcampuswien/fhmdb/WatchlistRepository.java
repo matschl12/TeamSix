@@ -31,7 +31,7 @@ public class WatchlistRepository implements Observable {
         try {
             instance = new WatchlistRepository();
         } catch (DatabaseException e) {
-            System.out.println();
+            throw new DatabaseException("Error while creating WatchlistRepository");
         }
     }
 
