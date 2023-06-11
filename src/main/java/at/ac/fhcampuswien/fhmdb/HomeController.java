@@ -8,7 +8,7 @@ import at.ac.fhcampuswien.fhmdb.pattern.ObserverPattern.Observer;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.MovieSortStates;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortASCENDING;
 import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortDESCENDING;
-import at.ac.fhcampuswien.fhmdb.ui.DialoguesAndMessages;
+import at.ac.fhcampuswien.fhmdb.pattern.StatePattern.SortNONE;
 import at.ac.fhcampuswien.fhmdb.ui.MovieCell;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -20,7 +20,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
 
 import java.net.URL;
 import java.util.*;
@@ -63,6 +62,8 @@ public class HomeController implements Initializable, Observer {
 
     private WatchlistRepository wr = WatchlistRepository.getInstance();
 
+    private MovieSortStates sortState = new MovieSortStates();
+
 
 
     @Override
@@ -83,18 +84,6 @@ public class HomeController implements Initializable, Observer {
         // initialize UI stuff
         movieListView.setCellFactory(movieListView -> new MovieCell(onAddToWatchlistClicked)); // use custom cell factory to display data
         movieListView.setItems(observableMovies);   // set data of observable list to list view
-
-        // for now i put it into a comment because it is not finished yet
-        /* try {
-            TextArea myCustomMessagesTextArea = new TextArea();
-            VBox myCustomMessagesVBox = new VBox(myCustomMessagesTextArea);
-            myCustomMessagesTextArea.setText(" Notice the TextArea ");
-        } catch (RuntimeException r){
-            System.out.println("VBox not working");
-        } finally{
-            System.out.println("myCustomMessagesTextArea");
-        } */
-
 
         // add watchlist movies from database to watchlist
         try {
@@ -162,11 +151,12 @@ public class HomeController implements Initializable, Observer {
 
                     observableMovies.clear();
                     observableMovies.addAll(MovieAPI.fetchMovies(searchFieldString,genreString,releaseYearInt,ratingDouble));
+                    sortState.sortMovies(observableMovies);
                 });
 
         // Sort button example: changed due to Exercise 4
         sortBtn.setOnAction(actionEvent -> {
-            MovieSortStates sortState = new MovieSortStates();
+            // MovieSortStates sortState = new MovieSortStates();
             if(sortBtn.getText().equals("Sort (asc)")) {
                 // TODO sort observableMovies ascending
                 // sortAscending(observableMovies);
@@ -205,6 +195,8 @@ public class HomeController implements Initializable, Observer {
         ratingComboBox.setPromptText("Filter by Rating");
         ratingComboBox.setValue(null);
         searchField.setText("");
+        sortState.setState(new SortNONE());
+        sortState.sortMovies(observableMovies);
     }
 
     // Exercise 2
@@ -288,6 +280,7 @@ public class HomeController implements Initializable, Observer {
             observableMovies.clear();
             // System.out.println(watchList);
             observableMovies.addAll(watchList); //show all movies from the watchlist
+            sortState.sortMovies(observableMovies);
             switchSceneBtn.setText("Switch to Homepage");
         }
         else
@@ -295,6 +288,7 @@ public class HomeController implements Initializable, Observer {
             observableMovies.clear();
             // System.out.println(watchList);
             observableMovies.addAll(allMovies); //show all movies
+            sortState.sortMovies(observableMovies);
             switchSceneBtn.setText("Switch to Watchlist");
         }
     }
