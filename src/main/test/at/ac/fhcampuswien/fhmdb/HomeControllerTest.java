@@ -36,17 +36,29 @@ class HomeControllerTest {
         assertEquals(HomeController.allMovies, homeController.observableMovies);
     }
     @Test
-    public void test_get_methods_of_title_description_and_genres() {
+    public void test_get_method_of_title() {
         Movie movie = new Movie(null,"Interstellar", "Earth's last chance to find a habitable planet " +
                 "before a lack of resources causes the human race to go extinct.",
                 Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), 0, null, 0, null, null, null, 0);
 
         assertEquals("Interstellar", movie.getTitle());
+    }
+    @Test
+    public void test_get_method_of_description() {
+        Movie movie = new Movie(null,"Interstellar", "Earth's last chance to find a habitable planet " +
+                "before a lack of resources causes the human race to go extinct.",
+                Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), 0, null, 0, null, null, null, 0);
         assertEquals("Earth's last chance to find a habitable planet " +
                 "before a lack of resources causes the human race to go extinct.", movie.getDescription());
-        assertEquals(Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), movie.getGenres());
     }
+    @Test
+    public void test_get_method_of_genres() {
+        Movie movie = new Movie(null,"Interstellar", "Earth's last chance to find a habitable planet " +
+                "before a lack of resources causes the human race to go extinct.",
+                Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), 0, null, 0, null, null, null, 0);
+        assertEquals(Arrays.asList(Genre.SCIENCE_FICTION, Genre.DRAMA), movie.getGenres());
 
+    }
 
     static MovieSortStates sortStates = new MovieSortStates();
 
@@ -135,6 +147,7 @@ class HomeControllerTest {
         List<Genre> actual = homeController.genreComboBox.getItems();
         assertEquals(expected, actual);
     } */
+
 
     @Test
     public void test_get_most_popular_actor_method() {
